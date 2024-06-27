@@ -89,44 +89,7 @@ const CreditCardForm: React.FC<CreditCardFormProps> = ({
       return newArray;
     });
   };
-  // const keyUpCardName = (
-  //   event: React.KeyboardEvent<HTMLInputElement>
-  // ) => {
-  //   const { value } = event.target as HTMLInputElement;
-  //   setCardName(value);
-  // };
 
-  // const handleChangeExpMonth = (
-  //   event: React.ChangeEvent<HTMLSelectElement>
-  // ) => {
-  //   const { value } = event.target;
-  //   setExpMonthState(value);
-  //   setExpMonth(value);
-  // };
-
-  // const handleChangeExpYear = (
-  //   event: React.ChangeEvent<HTMLSelectElement>
-  // ) => {
-  //   const { value } = event.target;
-  //   setExpYearState(value);
-  //   setExpYear(value);
-  // };
-
-  // const handleChangeCardCcv = (
-  //   event: React.ChangeEvent<HTMLInputElement>
-  // ) => {
-  //   const { value } = event.target;
-  //   setCardCcv(value);
-  //   setCvv(value);
-  // };
-
-  // const handleChangeCardHolder = (
-  //   event: React.ChangeEvent<HTMLInputElement>
-  // ) => {
-  //   const { value } = event.target;
-  //   setCardHolder(value);
-
-  // };
   return (
     <form className="form" autoComplete="off" noValidate>
       <fieldset>
