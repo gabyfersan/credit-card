@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { extractOnlyNumbers } from "../../utils/utils";
 import "./style.css";
 //import { Form, Row, Col, Button } from 'react-bootstrap';
 
@@ -47,9 +48,10 @@ const CreditCardForm: React.FC<CreditCardFormProps> = ({
     //const index = parseInt(id.match(/\d+/)?.[0] ?? "0");
     let tSubArray;
     if (
-      cardNumArray
-        .slice(newIndex * 4, newIndex * 4 + 4)
-        .filter((item) => typeof item === "number").length === 4 &&
+      extractOnlyNumbers(cardNumArray, newIndex).length === 4 &&
+      // cardNumArray
+      //   .slice(newIndex * 4, newIndex * 4 + 4)
+      //   .filter((item) => typeof item === "number").length === 4
       newIndex < 3
     ) {
       //inputRefs.current[newIndex - 1]?.focus();
@@ -60,9 +62,10 @@ const CreditCardForm: React.FC<CreditCardFormProps> = ({
     }
 
     if (
-      cardNumArray
-        .slice(newIndex * 4, newIndex * 4 + 4)
-        .filter((item) => typeof item === "number").length === 0 &&
+      extractOnlyNumbers(cardNumArray, newIndex).length === 0 &&
+      // cardNumArray
+      //   .slice(newIndex * 4, newIndex * 4 + 4)
+      //   .filter((item) => typeof item === "number").length === 0
       newIndex > 0 &&
       event.key == "Backspace"
     ) {
@@ -73,9 +76,11 @@ const CreditCardForm: React.FC<CreditCardFormProps> = ({
       // inputRefs.current[newIndex + 1]?.value = event.key;
     }
 
-    tSubArray = cardNumArray
-      .slice(newIndex * 4, newIndex * 4 + 4)
-      .filter((item) => typeof item === "number");
+    // tSubArray = cardNumArray
+    //   .slice(newIndex * 4, newIndex * 4 + 4)
+    //   .filter((item) => typeof item === "number");
+
+    tSubArray = extractOnlyNumbers(cardNumArray, newIndex);
 
     // if (numberToAdd == "Backspace") {
     //   //newIndex += 1;
@@ -171,9 +176,10 @@ const CreditCardForm: React.FC<CreditCardFormProps> = ({
             onKeyUp={(e) => keyUpCardNumber(e, index)}
             value={
               //cardNumArray[index] !== null ? cardNumArray[index] : ""
-              cardNumArray
-                .slice(index * 4, index * 4 + 4)
-                .filter((item) => typeof item === "number")
+              extractOnlyNumbers(cardNumArray, index)
+                // cardNumArray
+                //   .slice(index * 4, index * 4 + 4)
+                //   .filter((item) => typeof item === "number")
                 .join("")
             }
           />
