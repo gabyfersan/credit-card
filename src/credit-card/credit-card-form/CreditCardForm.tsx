@@ -22,6 +22,10 @@ const CreditCardForm: React.FC<CreditCardFormProps> = ({
   const [cardNumArray, setCardNumArray] = useState<number[]>(
     new Array(16).fill(null)
   );
+  const [expMonth, setExpMonthState] = useState<string>("");
+  const [expYear, setExpYearState] = useState<string>("");
+  const [cardCcv, setCardCcv] = useState<string>("");
+  const [cardHolder, setCardHolder] = useState<string>("");
 
   useEffect(() => {
     console.log("cardNumArray", cardNumArray);
@@ -92,11 +96,41 @@ const CreditCardForm: React.FC<CreditCardFormProps> = ({
     setCardName(value);
   };
 
+  const handleChangeExpMonth = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    const { value } = event.target;
+    setExpMonthState(value);
+    setExpMonth(value);
+  };
+
+  const handleChangeExpYear = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    const { value } = event.target;
+    setExpYearState(value);
+    setExpYear(value);
+  };
+
+  const handleChangeCardCcv = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const { value } = event.target;
+    setCardCcv(value);
+    setCvv(value);
+  };
+
+  const handleChangeCardHolder = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const { value } = event.target;
+    setCardHolder(value);
+    setCardName(value);
+  };
   return (
     <form className="form" autoComplete="off" noValidate>
       <fieldset>
         <label htmlFor="card-number">Card Number</label>
-
         {[0, 1, 2, 3].map((index) => (
           <input
             key={index}
@@ -106,41 +140,59 @@ const CreditCardForm: React.FC<CreditCardFormProps> = ({
             maxLength={4}
             ref={(el) => (inputRefs.current[index] = el)}
             onKeyUp={(e) => keyUpCardNumber(e, index)}
-            value={
-              //cardNumArray[index] !== null ? cardNumArray[index] : ""
-              extractOnlyNumbers(cardNumArray, index).join("")
-            }
+            value={extractOnlyNumbers(cardNumArray, index).join("")}
           />
         ))}
       </fieldset>
       <fieldset>
         <label htmlFor="card-holder">Card holder</label>
-        <input type="text" id="card-holder" onKeyUp={keyUpCardName} />
+        <input
+          type="text"
+          id="card-holder"
+          value={cardHolder}
+          onChange={handleChangeCardHolder}
+        />
       </fieldset>
       <fieldset className="fieldset-expiration">
         <label htmlFor="card-expiration-month">Expiration date</label>
         <div className="select">
-          <select id="card-expiration-month">
-            <option></option>
+          <select
+            id="card-expiration-month"
+            value={expMonth}
+            onChange={handleChangeExpMonth}
+          >
+            <option value=""></option>
             {Array.from({ length: 12 }, (_, i) => (
-              <option key={i}>
+              <option key={i} value={String(i + 1).padStart(2, "0")}>
                 {String(i + 1).padStart(2, "0")}
               </option>
             ))}
           </select>
         </div>
         <div className="select">
-          <select id="card-expiration-year">
-            <option></option>
+          <select
+            id="card-expiration-year"
+            value={expYear}
+            onChange={handleChangeExpYear}
+          >
+            <option value=""></option>
             {Array.from({ length: 10 }, (_, i) => (
-              <option key={i}>{2024 + i}</option>
+              <option key={i} value={String(24 + i)}>
+                {2024 + i}
+              </option>
             ))}
           </select>
         </div>
       </fieldset>
       <fieldset className="fieldset-ccv">
         <label htmlFor="card-ccv">CCV</label>
-        <input type="text" id="card-ccv" maxLength={3} />
+        <input
+          type="text"
+          id="card-ccv"
+          maxLength={3}
+          value={cardCcv}
+          onChange={handleChangeCardCcv}
+        />
       </fieldset>
       <button className="btn">
         <i className="fa fa-lock"></i> submit

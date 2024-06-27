@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import './style.css';
+import React, { useState } from "react";
+import "./style.css";
 //import { Form, Row, Col, Button } from 'react-bootstrap';
 
 interface CreditCardBoxProps {
@@ -61,7 +61,9 @@ const CreditCardBox: React.FC<CreditCardBoxProps> = ({
           </div>
           <div className="card-expiration-date">
             <label>Expires</label>
-            <div></div>
+            <div>
+              {expMonth ? expMonth : "MM"}/{expYear ? expYear : "YY"}
+            </div>
           </div>
         </div>
         <div className="back">
@@ -100,7 +102,7 @@ const CreditCardBox: React.FC<CreditCardBoxProps> = ({
           </div>
           <div className="ccv">
             <label>CCV</label>
-            <div></div>
+            <div>{cvv}</div>
           </div>
         </div>
       </div>
