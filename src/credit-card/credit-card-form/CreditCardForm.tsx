@@ -28,34 +28,71 @@ const CreditCardForm: React.FC<CreditCardFormProps> = ({
   }, [cardNumArray]);
 
   const keyUpCardNumber = (
-    event: React.KeyboardEvent<HTMLInputElement>
+    event: React.KeyboardEvent<HTMLInputElement>,
+    index: number
   ) => {
-    const { value } = event.target as HTMLInputElement;
+    let newIndex = index;
+    if (event.key === "Tab") {
+      return;
+    }
+    const numberToAdd = parseInt(event.key);
+    const inputValue = (event.target as HTMLInputElement).value;
     //alert(event.target.id.match(/\d+/)[0]);
 
-    const id = (event.target as HTMLInputElement).id;
-    const index = parseInt(id.match(/\d+/)?.[0] ?? "0");
+    //const id = (event.target as HTMLInputElement).id;
+    //const index = parseInt(id.match(/\d+/)?.[0] ?? "0");
+    let tSubArray;
+    if (
+      cardNumArray
+        .slice(newIndex * 4, newIndex * 4 + 4)
+        .filter((item) => typeof item === "number").length === 4 &&
+      newIndex < 3
+    ) {
+      //inputRefs.current[newIndex - 1]?.focus();
+      newIndex += 1;
+      inputRefs.current[newIndex]?.focus();
+
+      // inputRefs.current[newIndex + 1]?.value = event.key;
+    }
 
     if (
       cardNumArray
-        .slice(index * 4, 4)
-        .filter((item) => typeof item === "number").length === 4 &&
-      index < 3
+        .slice(newIndex * 4, newIndex * 4 + 4)
+        .filter((item) => typeof item === "number").length === 0 &&
+      newIndex > 0 &&
+      event.key == "Backspace"
     ) {
-      //inputRefs.current[index - 1]?.focus();
-      inputRefs.current[index + 1]?.focus();
-      // inputRefs.current[index + 1]?.value = event.key;
-    }
-    // const f = String(value).split("");
+      //inputRefs.current[newIndex - 1]?.focus();
+      newIndex -= 1;
+      inputRefs.current[newIndex]?.focus();
 
-    let insertArray = Array.from(value).map(Number);
+      // inputRefs.current[newIndex + 1]?.value = event.key;
+    }
+
+    tSubArray = cardNumArray
+      .slice(newIndex * 4, newIndex * 4 + 4)
+      .filter((item) => typeof item === "number");
+
+    // if (numberToAdd == "Backspace") {
+    //   //newIndex += 1;
+    //   //inputRefs.current[newIndex]?.focus();
+    //   // inputRefs.current[newIndex + 1]?.value = event.key;
+    // }
+
+    if (event.key == "Backspace") {
+      tSubArray.pop();
+    } else {
+      if (tSubArray.length < 4) {
+        tSubArray.push(numberToAdd);
+      }
+    }
+
+    //let insertArray = Array.from(value).map(Number);
 
     const fillArrayWithNulls =
-      insertArray.length >= 4
-        ? insertArray
-        : insertArray.concat(
-            Array(4 - insertArray.length).fill(null)
-          );
+      tSubArray.length >= 4
+        ? tSubArray
+        : tSubArray.concat(Array(4 - tSubArray.length).fill(null));
 
     // cardNumArray.splice(
     //   index * 4,
@@ -92,19 +129,19 @@ const CreditCardForm: React.FC<CreditCardFormProps> = ({
       //newArray.splice(index * 4, 4, ...fillArrayWithNulls);
 
       newArray.splice(
-        index * 4,
+        newIndex * 4,
         fillArrayWithNulls.length,
         ...fillArrayWithNulls
       );
       return newArray;
     });
 
-    if (value.length === 4 && index < 3) {
-      inputRefs.current[index + 1]?.focus();
-    }
-    if (value.length === 0 && index > 0) {
-      inputRefs.current[index - 1]?.focus();
-    }
+    // if (inputValue.length === 4 && newIndex < 3) {
+    //   inputRefs.current[newIndex + 1]?.focus();
+    // }
+    // if (inputValue.length === 0 && newIndex > 0) {
+    //   inputRefs.current[newIndex - 1]?.focus();
+    // }
   };
   const keyUpCardName = (
     event: React.KeyboardEvent<HTMLInputElement>
@@ -119,16 +156,33 @@ const CreditCardForm: React.FC<CreditCardFormProps> = ({
       <fieldset>
         <label htmlFor="card-number">Card Number</label>
 
-        {[0, 1, 2, 3].map((i) => (
+        {[0, 1, 2, 3].map((index) => (
           <input
-            key={i}
-            onKeyUp={(e) => keyUpCardNumber(e, i)}
+            key={index}
             type="text"
-            id={`card-number-${i}`}
+            id={`card-number-${index}`}
             className="input-cart-number"
             maxLength={4}
-            ref={(el) => (inputRefs.current[i] = el)}
+            ref={(el) => (inputRefs.current[index] = el)}
+            onKeyUp={(e) => keyUpCardNumber(e, index)}
+            value={
+              //cardNumArray[index] !== null ? cardNumArray[index] : ""
+              cardNumArray
+                .slice(index * 4, index * 4 + 4)
+                .filter((item) => typeof item === "number")
+                .join("")
+            }
           />
+
+          // <input
+          //   key={i}
+          //   onKeyUp={(e) => keyUpCardNumber(e, i)}
+          //   type="text"
+          //   id={`card-number-${i}`}
+          //   className="input-cart-number"
+          //   maxLength={4}
+          //   ref={(el) => (inputRefs.current[i] = el)}
+          // />
         ))}
 
         {/* <input
