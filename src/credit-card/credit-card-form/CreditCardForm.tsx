@@ -31,8 +31,12 @@ const CreditCardForm: React.FC<CreditCardFormProps> = ({
     event: React.KeyboardEvent<HTMLInputElement>,
     index: number
   ) => {
+    console.log("event.key", event.key);
     let newIndex = index;
-    if (event.key === "Tab") {
+    if (
+      (event.key.length > 1 && !["Backspace"].includes(event.key)) ||
+      (event.key.length === 1 && !/^[0-9]$/.test(event.key))
+    ) {
       return;
     }
     const numberToAdd = parseInt(event.key);
