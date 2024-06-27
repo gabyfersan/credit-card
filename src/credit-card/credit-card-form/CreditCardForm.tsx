@@ -89,44 +89,44 @@ const CreditCardForm: React.FC<CreditCardFormProps> = ({
       return newArray;
     });
   };
-  const keyUpCardName = (
-    event: React.KeyboardEvent<HTMLInputElement>
-  ) => {
-    const { value } = event.target as HTMLInputElement;
-    setCardName(value);
-  };
+  // const keyUpCardName = (
+  //   event: React.KeyboardEvent<HTMLInputElement>
+  // ) => {
+  //   const { value } = event.target as HTMLInputElement;
+  //   setCardName(value);
+  // };
 
-  const handleChangeExpMonth = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    const { value } = event.target;
-    setExpMonthState(value);
-    setExpMonth(value);
-  };
+  // const handleChangeExpMonth = (
+  //   event: React.ChangeEvent<HTMLSelectElement>
+  // ) => {
+  //   const { value } = event.target;
+  //   setExpMonthState(value);
+  //   setExpMonth(value);
+  // };
 
-  const handleChangeExpYear = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    const { value } = event.target;
-    setExpYearState(value);
-    setExpYear(value);
-  };
+  // const handleChangeExpYear = (
+  //   event: React.ChangeEvent<HTMLSelectElement>
+  // ) => {
+  //   const { value } = event.target;
+  //   setExpYearState(value);
+  //   setExpYear(value);
+  // };
 
-  const handleChangeCardCcv = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const { value } = event.target;
-    setCardCcv(value);
-    setCvv(value);
-  };
+  // const handleChangeCardCcv = (
+  //   event: React.ChangeEvent<HTMLInputElement>
+  // ) => {
+  //   const { value } = event.target;
+  //   setCardCcv(value);
+  //   setCvv(value);
+  // };
 
-  const handleChangeCardHolder = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const { value } = event.target;
-    setCardHolder(value);
-    setCardName(value);
-  };
+  // const handleChangeCardHolder = (
+  //   event: React.ChangeEvent<HTMLInputElement>
+  // ) => {
+  //   const { value } = event.target;
+  //   setCardHolder(value);
+
+  // };
   return (
     <form className="form" autoComplete="off" noValidate>
       <fieldset>
@@ -140,6 +140,7 @@ const CreditCardForm: React.FC<CreditCardFormProps> = ({
             maxLength={4}
             ref={(el) => (inputRefs.current[index] = el)}
             onKeyUp={(e) => keyUpCardNumber(e, index)}
+            //onChange={(e) => keyUpCardNumber(e, index)}
             value={extractOnlyNumbers(cardNumArray, index).join("")}
           />
         ))}
@@ -150,7 +151,7 @@ const CreditCardForm: React.FC<CreditCardFormProps> = ({
           type="text"
           id="card-holder"
           value={cardHolder}
-          onChange={handleChangeCardHolder}
+          onChange={(event) => setCardHolder(event.target.value)}
         />
       </fieldset>
       <fieldset className="fieldset-expiration">
@@ -159,7 +160,9 @@ const CreditCardForm: React.FC<CreditCardFormProps> = ({
           <select
             id="card-expiration-month"
             value={expMonth}
-            onChange={handleChangeExpMonth}
+            onChange={(event) => {
+              setExpMonthState(event.target.value);
+            }}
           >
             <option value=""></option>
             {Array.from({ length: 12 }, (_, i) => (
@@ -173,7 +176,9 @@ const CreditCardForm: React.FC<CreditCardFormProps> = ({
           <select
             id="card-expiration-year"
             value={expYear}
-            onChange={handleChangeExpYear}
+            onChange={(event) => {
+              setExpYearState(event.target.value);
+            }}
           >
             <option value=""></option>
             {Array.from({ length: 10 }, (_, i) => (
@@ -191,7 +196,9 @@ const CreditCardForm: React.FC<CreditCardFormProps> = ({
           id="card-ccv"
           maxLength={3}
           value={cardCcv}
-          onChange={handleChangeCardCcv}
+          onChange={(event) => {
+            setCardCcv(event.target.value);
+          }}
         />
       </fieldset>
       <button className="btn">
