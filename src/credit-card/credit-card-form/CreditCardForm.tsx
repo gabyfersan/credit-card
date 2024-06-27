@@ -16,7 +16,6 @@ const CreditCardForm: React.FC<CreditCardFormProps> = ({
   setCardName,
   setExpMonth,
   setExpYear,
-
   setCvv,
 }) => {
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
@@ -26,6 +25,7 @@ const CreditCardForm: React.FC<CreditCardFormProps> = ({
 
   useEffect(() => {
     console.log("cardNumArray", cardNumArray);
+    setCardNum(extractOnlyNumbers(cardNumArray, 0, 16).join(""));
   }, [cardNumArray]);
 
   const keyUpCardNumber = (
@@ -156,7 +156,6 @@ const CreditCardForm: React.FC<CreditCardFormProps> = ({
     event: React.KeyboardEvent<HTMLInputElement>
   ) => {
     const { value } = event.target as HTMLInputElement;
-
     setCardName(value);
   };
 
@@ -233,33 +232,19 @@ const CreditCardForm: React.FC<CreditCardFormProps> = ({
         <div className="select">
           <select id="card-expiration-month">
             <option></option>
-            <option>01</option>
-            <option>02</option>
-            <option>03</option>
-            <option>04</option>
-            <option>05</option>
-            <option>06</option>
-            <option>07</option>
-            <option>08</option>
-            <option>09</option>
-            <option>10</option>
-            <option>11</option>
-            <option>12</option>
+            {Array.from({ length: 12 }, (_, i) => (
+              <option key={i}>
+                {String(i + 1).padStart(2, "0")}
+              </option>
+            ))}
           </select>
         </div>
         <div className="select">
           <select id="card-expiration-year">
             <option></option>
-            <option>2016</option>
-            <option>2017</option>
-            <option>2018</option>
-            <option>2019</option>
-            <option>2020</option>
-            <option>2021</option>
-            <option>2022</option>
-            <option>2023</option>
-            <option>2024</option>
-            <option>2025</option>
+            {Array.from({ length: 10 }, (_, i) => (
+              <option key={i}>{2024 + i}</option>
+            ))}
           </select>
         </div>
       </fieldset>
