@@ -41,52 +41,25 @@ const CreditCardForm: React.FC<CreditCardFormProps> = ({
       return;
     }
     const numberToAdd = parseInt(event.key);
-    const inputValue = (event.target as HTMLInputElement).value;
-    //alert(event.target.id.match(/\d+/)[0]);
-
-    //const id = (event.target as HTMLInputElement).id;
-    //const index = parseInt(id.match(/\d+/)?.[0] ?? "0");
     let tSubArray;
     if (
       extractOnlyNumbers(cardNumArray, newIndex).length === 4 &&
-      // cardNumArray
-      //   .slice(newIndex * 4, newIndex * 4 + 4)
-      //   .filter((item) => typeof item === "number").length === 4
       newIndex < 3
     ) {
-      //inputRefs.current[newIndex - 1]?.focus();
       newIndex += 1;
       inputRefs.current[newIndex]?.focus();
-
-      // inputRefs.current[newIndex + 1]?.value = event.key;
     }
 
     if (
       extractOnlyNumbers(cardNumArray, newIndex).length === 0 &&
-      // cardNumArray
-      //   .slice(newIndex * 4, newIndex * 4 + 4)
-      //   .filter((item) => typeof item === "number").length === 0
       newIndex > 0 &&
       event.key == "Backspace"
     ) {
-      //inputRefs.current[newIndex - 1]?.focus();
       newIndex -= 1;
       inputRefs.current[newIndex]?.focus();
-
-      // inputRefs.current[newIndex + 1]?.value = event.key;
     }
 
-    // tSubArray = cardNumArray
-    //   .slice(newIndex * 4, newIndex * 4 + 4)
-    //   .filter((item) => typeof item === "number");
-
     tSubArray = extractOnlyNumbers(cardNumArray, newIndex);
-
-    // if (numberToAdd == "Backspace") {
-    //   //newIndex += 1;
-    //   //inputRefs.current[newIndex]?.focus();
-    //   // inputRefs.current[newIndex + 1]?.value = event.key;
-    // }
 
     if (event.key == "Backspace") {
       tSubArray.pop();
@@ -96,46 +69,13 @@ const CreditCardForm: React.FC<CreditCardFormProps> = ({
       }
     }
 
-    //let insertArray = Array.from(value).map(Number);
-
     const fillArrayWithNulls =
       tSubArray.length >= 4
         ? tSubArray
         : tSubArray.concat(Array(4 - tSubArray.length).fill(null));
 
-    // cardNumArray.splice(
-    //   index * 4,
-    //   insertArray.length,
-    //   ...insertArray
-    // );
-
-    //   setCardNumArray(
-    //     cardNumArray.toSpliced(
-    //       index * 4,
-    //       value.split().length,
-    //       f.join(",")
-    //     )
-    //   );
-    // };
-    // console.log(
-    //   [...cardNumArray],
-    //   insertArray,
-    //   [...cardNumArray].splice(
-    //     index * 4,
-    //     insertArray.length,
-    //     ...insertArray
-    //   )
-    // );
-    // console.log(cardNumArray);
-    // [...cardNumArray].splice(
-    //   index * 4,
-    //   fillArrayWithNulls.length,
-    //   ...fillArrayWithNulls
-    // );
-    //setCardNumArray(cardNumArray);
     setCardNumArray((prevArray) => {
       const newArray = [...prevArray];
-      //newArray.splice(index * 4, 4, ...fillArrayWithNulls);
 
       newArray.splice(
         newIndex * 4,
@@ -144,13 +84,6 @@ const CreditCardForm: React.FC<CreditCardFormProps> = ({
       );
       return newArray;
     });
-
-    // if (inputValue.length === 4 && newIndex < 3) {
-    //   inputRefs.current[newIndex + 1]?.focus();
-    // }
-    // if (inputValue.length === 0 && newIndex > 0) {
-    //   inputRefs.current[newIndex - 1]?.focus();
-    // }
   };
   const keyUpCardName = (
     event: React.KeyboardEvent<HTMLInputElement>
@@ -175,53 +108,10 @@ const CreditCardForm: React.FC<CreditCardFormProps> = ({
             onKeyUp={(e) => keyUpCardNumber(e, index)}
             value={
               //cardNumArray[index] !== null ? cardNumArray[index] : ""
-              extractOnlyNumbers(cardNumArray, index)
-                // cardNumArray
-                //   .slice(index * 4, index * 4 + 4)
-                //   .filter((item) => typeof item === "number")
-                .join("")
+              extractOnlyNumbers(cardNumArray, index).join("")
             }
           />
-
-          // <input
-          //   key={i}
-          //   onKeyUp={(e) => keyUpCardNumber(e, i)}
-          //   type="text"
-          //   id={`card-number-${i}`}
-          //   className="input-cart-number"
-          //   maxLength={4}
-          //   ref={(el) => (inputRefs.current[i] = el)}
-          // />
         ))}
-
-        {/* <input
-          onKeyUp={keyUpCardNumber}
-          type="num"
-          id="card-number-0"
-          className="input-cart-number"
-          maxLength={4}
-        />
-        <input
-          onKeyUp={keyUpCardNumber}
-          type="num"
-          id="card-number-1"
-          className="input-cart-number"
-          maxLength={4}
-        />
-        <input
-          onKeyUp={keyUpCardNumber}
-          type="num"
-          id="card-number-2"
-          className="input-cart-number"
-          maxLength={4}
-        />
-        <input
-          onKeyUp={keyUpCardNumber}
-          type="num"
-          id="card-number-3"
-          className="input-cart-number"
-          maxLength={4}
-        /> */}
       </fieldset>
       <fieldset>
         <label htmlFor="card-holder">Card holder</label>
