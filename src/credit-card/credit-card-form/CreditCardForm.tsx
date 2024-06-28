@@ -1,7 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
 import { extractOnlyNumbers } from "../../utils/utils";
+import { CardNumberInputField } from "./CardNumberInputField";
+import { CardHolderInputField } from "./CardHolderInputField";
+import { ExpirationSelectInputField } from "./ExpirationSelectInputField";
+import { CCVInputField } from "./CCVInputField";
 import "./style.css";
-//import { Form, Row, Col, Button } from 'react-bootstrap';
 
 interface CreditCardFormProps {
   setCardNum: (a: string) => void;
@@ -28,142 +31,31 @@ const CreditCardForm: React.FC<CreditCardFormProps> = ({
   const [cardHolder, setCardHolder] = useState<string>("");
 
   useEffect(() => {
-    console.log("cardNumArray", cardNumArray);
     setCardNum(extractOnlyNumbers(cardNumArray, 0, 16).join(""));
-  }, [cardNumArray]);
-
-  const keyUpCardNumber = (
-    event: React.KeyboardEvent<HTMLInputElement>,
-    index: number
-  ) => {
-    console.log("event.key", event.key);
-    let newIndex = index;
-    if (
-      (event.key.length > 1 && !["Backspace"].includes(event.key)) ||
-      (event.key.length === 1 && !/^[0-9]$/.test(event.key))
-    ) {
-      return;
-    }
-    const numberToAdd = parseInt(event.key);
-    let tSubArray;
-    if (
-      extractOnlyNumbers(cardNumArray, newIndex).length === 4 &&
-      newIndex < 3
-    ) {
-      newIndex += 1;
-      inputRefs.current[newIndex]?.focus();
-    }
-
-    if (
-      extractOnlyNumbers(cardNumArray, newIndex).length === 0 &&
-      newIndex > 0 &&
-      event.key == "Backspace"
-    ) {
-      newIndex -= 1;
-      inputRefs.current[newIndex]?.focus();
-    }
-
-    tSubArray = extractOnlyNumbers(cardNumArray, newIndex);
-
-    if (event.key == "Backspace") {
-      tSubArray.pop();
-    } else {
-      if (tSubArray.length < 4) {
-        tSubArray.push(numberToAdd);
-      }
-    }
-
-    const fillArrayWithNulls =
-      tSubArray.length >= 4
-        ? tSubArray
-        : tSubArray.concat(Array(4 - tSubArray.length).fill(null));
-
-    setCardNumArray((prevArray) => {
-      const newArray = [...prevArray];
-
-      newArray.splice(
-        newIndex * 4,
-        fillArrayWithNulls.length,
-        ...fillArrayWithNulls
-      );
-      return newArray;
-    });
-  };
+    setCardName(cardHolder);
+    setExpMonth(expMonth);
+    setExpYear(expYear);
+    setCvv(cardCcv);
+  }, [cardNumArray, cardCcv, expYear, expMonth, cardHolder]);
 
   return (
     <form className="form" autoComplete="off" noValidate>
-      <fieldset>
-        <label htmlFor="card-number">Card Number</label>
-        {[0, 1, 2, 3].map((index) => (
-          <input
-            key={index}
-            type="text"
-            id={`card-number-${index}`}
-            className="input-cart-number"
-            maxLength={4}
-            ref={(el) => (inputRefs.current[index] = el)}
-            onKeyUp={(e) => keyUpCardNumber(e, index)}
-            //onChange={(e) => keyUpCardNumber(e, index)}
-            value={extractOnlyNumbers(cardNumArray, index).join("")}
-          />
-        ))}
-      </fieldset>
-      <fieldset>
-        <label htmlFor="card-holder">Card holder</label>
-        <input
-          type="text"
-          id="card-holder"
-          value={cardHolder}
-          onChange={(event) => setCardHolder(event.target.value)}
-        />
-      </fieldset>
-      <fieldset className="fieldset-expiration">
-        <label htmlFor="card-expiration-month">Expiration date</label>
-        <div className="select">
-          <select
-            id="card-expiration-month"
-            value={expMonth}
-            onChange={(event) => {
-              setExpMonthState(event.target.value);
-            }}
-          >
-            <option value=""></option>
-            {Array.from({ length: 12 }, (_, i) => (
-              <option key={i} value={String(i + 1).padStart(2, "0")}>
-                {String(i + 1).padStart(2, "0")}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="select">
-          <select
-            id="card-expiration-year"
-            value={expYear}
-            onChange={(event) => {
-              setExpYearState(event.target.value);
-            }}
-          >
-            <option value=""></option>
-            {Array.from({ length: 10 }, (_, i) => (
-              <option key={i} value={String(24 + i)}>
-                {2024 + i}
-              </option>
-            ))}
-          </select>
-        </div>
-      </fieldset>
-      <fieldset className="fieldset-ccv">
-        <label htmlFor="card-ccv">CCV</label>
-        <input
-          type="text"
-          id="card-ccv"
-          maxLength={3}
-          value={cardCcv}
-          onChange={(event) => {
-            setCardCcv(event.target.value);
-          }}
-        />
-      </fieldset>
+      <CardNumberInputField
+        cardNumArray={cardNumArray}
+        setCardNumArray={setCardNumArray}
+        inputRefs={inputRefs}
+      />
+      <CardHolderInputField
+        cardHolder={cardHolder}
+        setCardHolder={setCardHolder}
+      />
+      <ExpirationSelectInputField
+        expMonth={expMonth}
+        setExpMonthState={setExpMonthState}
+        expYear={expYear}
+        setExpYearState={setExpYearState}
+      />
+      <CCVInputField cardCcv={cardCcv} setCardCcv={setCardCcv} />
       <button className="btn">
         <i className="fa fa-lock"></i> submit
       </button>
