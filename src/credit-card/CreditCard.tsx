@@ -34,6 +34,10 @@ const CreditCard: React.FC<CreditCardProps> = ({
     setCardNum(extractOnlyNumbers(cardNumArray, 0, 16).join(""));
   }, [cardNumArray]);
 
+  useEffect(() => {
+    inputRefs.current[0]?.focus();
+  }, []);
+
   return (
     <div className="checkout">
       <CreditCardBox

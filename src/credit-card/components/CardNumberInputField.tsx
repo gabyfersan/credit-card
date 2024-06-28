@@ -9,19 +9,22 @@ interface CardNumberInputFieldProps {
 export const CardNumberInputField: React.FC<
   CardNumberInputFieldProps
 > = ({ cardNumArray, setCardNumArray, inputRefs }) => {
-  const keyUpCardNumber = (
+  const handleKeyUp = (
     event: React.KeyboardEvent<HTMLInputElement>,
     index: number
   ) => {
     let newIndex = index;
-    if (
-      (event.key.length > 1 && !["Backspace"].includes(event.key)) ||
-      (event.key.length === 1 && !/^[0-9]$/.test(event.key))
-    ) {
+    const isBackspace = event.key === "Backspace";
+    const isSingleKeyNotAnumber =
+      event.key.length === 1 && !/^[0-9]$/.test(event.key);
+    const isInvalidKey = event.key.length > 1 && !isBackspace;
+
+    if (isInvalidKey || isSingleKeyNotAnumber) {
       return;
     }
     const numberToAdd = parseInt(event.key);
-    let tSubArray;
+    let subArray;
+    //True if any of the first three input fields is in focus and full of numbers, => change focus to next input field
     if (
       extractOnlyNumbers(cardNumArray, newIndex).length === 4 &&
       newIndex < 3
@@ -29,38 +32,31 @@ export const CardNumberInputField: React.FC<
       newIndex += 1;
       inputRefs.current[newIndex]?.focus();
     }
-
+    //True if any of the last three input fields is in focus, empty, and the user presses backspace = change focus to previous input field
     if (
       extractOnlyNumbers(cardNumArray, newIndex).length === 0 &&
       newIndex > 0 &&
-      event.key == "Backspace"
+      isBackspace
     ) {
       newIndex -= 1;
       inputRefs.current[newIndex]?.focus();
     }
 
-    tSubArray = extractOnlyNumbers(cardNumArray, newIndex);
+    subArray = extractOnlyNumbers(cardNumArray, newIndex);
 
-    if (event.key == "Backspace") {
-      tSubArray.pop();
-    } else {
-      if (tSubArray.length < 4) {
-        tSubArray.push(numberToAdd);
-      }
+    if (isBackspace) {
+      subArray.pop();
+    } else if (subArray.length < 4) {
+      subArray.push(numberToAdd);
     }
 
-    const fillArrayWithNulls =
-      tSubArray.length >= 4
-        ? tSubArray
-        : tSubArray.concat(Array(4 - tSubArray.length).fill(null));
+    const fillArrayWithNulls = subArray.concat(
+      Array(4 - subArray.length).fill(null)
+    );
 
     setCardNumArray((prevArray) => {
       const newArray = [...prevArray];
-      newArray.splice(
-        newIndex * 4,
-        fillArrayWithNulls.length,
-        ...fillArrayWithNulls
-      );
+      newArray.splice(newIndex * 4, 4, ...fillArrayWithNulls);
       return newArray;
     });
   };
@@ -76,7 +72,7 @@ export const CardNumberInputField: React.FC<
           className="input-cart-number"
           maxLength={4}
           ref={(el) => (inputRefs.current[index] = el)}
-          onKeyUp={(e) => keyUpCardNumber(e, index)}
+          onKeyUp={(e) => handleKeyUp(e, index)}
           value={extractOnlyNumbers(cardNumArray, index).join("")}
           onChange={() => {}} // Adding empty onChange to suppress the warning
         />
