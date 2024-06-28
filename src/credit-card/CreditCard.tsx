@@ -29,6 +29,8 @@ const CreditCard: React.FC<CreditCardProps> = ({
   const [cardCcv, setCardCcv] = useState<string>("");
   const [cardName, setCardName] = useState<string>(cardHolder);
   const [cardNum, setCardNum] = useState<string>(cardNumber);
+  const [cardFlipToBackside, setCardFlipToBackside] =
+    useState<boolean>(false);
 
   useEffect(() => {
     setCardNum(extractOnlyNumbers(cardNumArray, 0, 16).join(""));
@@ -46,6 +48,7 @@ const CreditCard: React.FC<CreditCardProps> = ({
         expMonth={expMonth}
         expYear={expYear}
         cardCcv={cardCcv}
+        cardFlipToBackside={cardFlipToBackside}
       />
 
       <form className="form" autoComplete="off" noValidate>
@@ -64,7 +67,12 @@ const CreditCard: React.FC<CreditCardProps> = ({
           expYear={expYear}
           setExpYear={setExpYear}
         />
-        <CCVInputField cardCcv={cardCcv} setCardCcv={setCardCcv} />
+        <CCVInputField
+          cardCcv={cardCcv}
+          setCardCcv={setCardCcv}
+          onFocus={() => setCardFlipToBackside(true)}
+          onBlur={() => setCardFlipToBackside(false)}
+        />
         <button className="btn">
           <i className="fa fa-lock"></i> submit
         </button>

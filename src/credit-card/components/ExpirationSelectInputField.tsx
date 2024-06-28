@@ -32,7 +32,7 @@ export const ExpirationSelectInputField: React.FC<
       >
         <option value=""></option>
         {Array.from({ length: 10 }, (_, i) => (
-          <option key={i} value={String(2024 + i)}>
+          <option key={i} value={String(2024 + i).slice(2, 4)}>
             {2024 + i}
           </option>
         ))}

@@ -8,6 +8,7 @@ interface CreditCardBoxProps {
   expMonth: string;
   expYear: string;
   cardCcv: string;
+  cardFlipToBackside: boolean;
 }
 
 const CreditCardBox: React.FC<CreditCardBoxProps> = ({
@@ -16,9 +17,14 @@ const CreditCardBox: React.FC<CreditCardBoxProps> = ({
   expMonth,
   expYear,
   cardCcv,
+  cardFlipToBackside,
 }) => {
   return (
-    <div className="credit-card-box">
+    <div
+      className={`credit-card-box ${
+        cardFlipToBackside ? "hover" : ""
+      }`}
+    >
       <div className="flip">
         <div className="front">
           <div className="chip"></div>
