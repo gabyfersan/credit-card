@@ -27,7 +27,8 @@ export const CardNumberInputField: React.FC<
     //True if any of the first three input fields is in focus and full of numbers, => change focus to next input field
     if (
       extractOnlyNumbers(cardNumArray, newIndex).length === 4 &&
-      newIndex < 3
+      newIndex < 3 &&
+      !isBackspace
     ) {
       newIndex += 1;
       inputRefs.current[newIndex]?.focus();

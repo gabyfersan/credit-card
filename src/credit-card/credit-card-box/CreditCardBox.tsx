@@ -3,7 +3,7 @@ import "./style.css";
 //import { Form, Row, Col, Button } from 'react-bootstrap';
 
 interface CreditCardBoxProps {
-  cardNum: string;
+  cardNumArray: Array<number>;
   cardName: string;
   expMonth: string;
   expYear: string;
@@ -12,7 +12,7 @@ interface CreditCardBoxProps {
 }
 
 const CreditCardBox: React.FC<CreditCardBoxProps> = ({
-  cardNum,
+  cardNumArray,
   cardName,
   expMonth,
   expYear,
@@ -60,7 +60,17 @@ const CreditCardBox: React.FC<CreditCardBoxProps> = ({
               </g>
             </svg>
           </div>
-          <div className="number">{cardNum}</div>
+          <div className="number">
+            {cardNumArray.map((number, i) => {
+              let output;
+
+              output = number === null ? "*" : number;
+              if ((i + 1) % 4 === 0) {
+                output += " ";
+              }
+              return output;
+            })}
+          </div>
           <div className="card-holder">
             <label>Card holder</label>
             <div>{cardName}</div>

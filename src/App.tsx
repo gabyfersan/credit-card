@@ -3,8 +3,10 @@ import CreditCard from "./credit-card/CreditCard";
 import { CardInformation } from "../types";
 
 const App = () => {
-  const [cardNumber, setCardNumber] = useState("");
-  const [cardHolder, setCardHolder] = useState("");
+  const [cardNumber, setCardNumber] = useState<string>("");
+  const [cardHolder, setCardHolder] = useState<string>("");
+  // setCardNumber("1234567891234567");
+  // setCardHolder("Gaby Fersan");
   const [cardInformation, setCardInformation] =
     useState<CardInformation>({
       cardNum: "",

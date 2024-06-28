@@ -22,19 +22,16 @@ const CreditCard: React.FC<CreditCardProps> = ({
 }) => {
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
   const [cardNumArray, setCardNumArray] = useState<number[]>(
-    new Array(16).fill(null)
+    cardNumber
+      ? cardNumber.split("").map(Number)
+      : new Array(16).fill(null)
   );
   const [expMonth, setExpMonth] = useState<string>("");
   const [expYear, setExpYear] = useState<string>("");
   const [cardCcv, setCardCcv] = useState<string>("");
   const [cardName, setCardName] = useState<string>(cardHolder);
-  const [cardNum, setCardNum] = useState<string>(cardNumber);
   const [cardFlipToBackside, setCardFlipToBackside] =
     useState<boolean>(false);
-
-  useEffect(() => {
-    setCardNum(extractOnlyNumbers(cardNumArray, 0, 16).join(""));
-  }, [cardNumArray]);
 
   useEffect(() => {
     inputRefs.current[0]?.focus();
@@ -43,7 +40,7 @@ const CreditCard: React.FC<CreditCardProps> = ({
   return (
     <div className="checkout">
       <CreditCardBox
-        cardNum={cardNum}
+        cardNumArray={cardNumArray}
         cardName={cardName}
         expMonth={expMonth}
         expYear={expYear}
