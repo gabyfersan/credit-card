@@ -1,20 +1,20 @@
 interface ExpirationSelectInputFieldProps {
   expMonth: string;
-  setExpMonthState: (value: string) => void;
+  setExpMonth: (value: string) => void;
   expYear: string;
-  setExpYearState: (value: string) => void;
+  setExpYear: (value: string) => void;
 }
 
 export const ExpirationSelectInputField: React.FC<
   ExpirationSelectInputFieldProps
-> = ({ expMonth, setExpMonthState, expYear, setExpYearState }) => (
+> = ({ expMonth, setExpMonth, expYear, setExpYear }) => (
   <fieldset className="fieldset-expiration">
     <label htmlFor="card-expiration-month">Expiration date</label>
     <div className="select">
       <select
         id="card-expiration-month"
         value={expMonth}
-        onChange={(event) => setExpMonthState(event.target.value)}
+        onChange={(event) => setExpMonth(event.target.value)}
       >
         <option value=""></option>
         {Array.from({ length: 12 }, (_, i) => (
@@ -28,7 +28,7 @@ export const ExpirationSelectInputField: React.FC<
       <select
         id="card-expiration-year"
         value={expYear}
-        onChange={(event) => setExpYearState(event.target.value)}
+        onChange={(event) => setExpYear(event.target.value)}
       >
         <option value=""></option>
         {Array.from({ length: 10 }, (_, i) => (

@@ -7,7 +7,7 @@ interface CreditCardBoxProps {
   cardName: string;
   expMonth: string;
   expYear: string;
-  cvv: string;
+  cardCcv: string;
 }
 
 const CreditCardBox: React.FC<CreditCardBoxProps> = ({
@@ -15,7 +15,7 @@ const CreditCardBox: React.FC<CreditCardBoxProps> = ({
   cardName,
   expMonth,
   expYear,
-  cvv,
+  cardCcv,
 }) => {
   return (
     <div className="credit-card-box">
@@ -102,7 +102,7 @@ const CreditCardBox: React.FC<CreditCardBoxProps> = ({
           </div>
           <div className="ccv">
             <label>CCV</label>
-            <div>{cvv}</div>
+            <div>{cardCcv}</div>
           </div>
         </div>
       </div>
