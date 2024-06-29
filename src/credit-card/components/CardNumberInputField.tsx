@@ -1,3 +1,5 @@
+import React from "react";
+import { TextField, Box, Typography } from "@mui/material";
 import { extractOnlyNumbers } from "../../utils/utils";
 
 interface CardNumberInputFieldProps {
@@ -24,7 +26,7 @@ export const CardNumberInputField: React.FC<
     }
     const numberToAdd = parseInt(event.key);
     let subArray;
-    //True if any of the first three input fields is in focus and full of numbers, => change focus to next input field
+    // True if any of the first three input fields is in focus and full of numbers, => change focus to next input field
     if (
       extractOnlyNumbers(cardNumArray, newIndex).length === 4 &&
       newIndex < 3 &&
@@ -33,7 +35,7 @@ export const CardNumberInputField: React.FC<
       newIndex += 1;
       inputRefs.current[newIndex]?.focus();
     }
-    //True if any of the last three input fields is in focus, empty, and the user presses backspace = change focus to previous input field
+    // True if any of the last three input fields is in focus, empty, and the user presses backspace = change focus to previous input field
     if (
       extractOnlyNumbers(cardNumArray, newIndex).length === 0 &&
       newIndex > 0 &&
@@ -63,21 +65,23 @@ export const CardNumberInputField: React.FC<
   };
 
   return (
-    <fieldset>
-      <label htmlFor="card-number">Card Number</label>
-      {[0, 1, 2, 3].map((index) => (
-        <input
-          key={index}
-          type="text"
-          id={`card-number-${index}`}
-          className="input-cart-number"
-          maxLength={4}
-          ref={(el) => (inputRefs.current[index] = el)}
-          onKeyUp={(e) => handleKeyUp(e, index)}
-          value={extractOnlyNumbers(cardNumArray, index).join("")}
-          onChange={() => {}} // Adding empty onChange to suppress the warning
-        />
-      ))}
-    </fieldset>
+    <Box>
+      <Typography component="legend">Card Number</Typography>
+      <Box display="flex" gap={1}>
+        {[0, 1, 2, 3].map((index) => (
+          <TextField
+            key={index}
+            type="text"
+            id={`card-number-${index}`}
+            inputProps={{ maxLength: 4 }}
+            inputRef={(el) => (inputRefs.current[index] = el)}
+            onKeyUp={(e) => handleKeyUp(e, index)}
+            value={extractOnlyNumbers(cardNumArray, index).join("")}
+            onChange={() => {}} // Adding empty onChange to suppress the warning
+            variant="outlined"
+          />
+        ))}
+      </Box>
+    </Box>
   );
 };

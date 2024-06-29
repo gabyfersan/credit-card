@@ -1,3 +1,6 @@
+import React from "react";
+import { TextField } from "@mui/material";
+
 interface CardHolderInputFieldProps {
   cardName: string;
   setCardName: (value: string) => void;
@@ -6,13 +9,13 @@ interface CardHolderInputFieldProps {
 export const CardHolderInputField: React.FC<
   CardHolderInputFieldProps
 > = ({ cardName, setCardName }) => (
-  <fieldset>
-    <label htmlFor="card-holder">Card holder</label>
-    <input
-      type="text"
-      id="card-holder"
+  <div>
+    <TextField
+      label="Card holder"
+      fullWidth
       value={cardName}
       onChange={(event) => setCardName(event.target.value)}
+      margin="normal"
     />
-  </fieldset>
+  </div>
 );
