@@ -1,12 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Form, Row, Col, Button } from "react-bootstrap";
 import CreditCardBox from "./credit-card-box/CreditCardBox";
 import { CardNumberInputField } from "./components/CardNumberInputField";
-import { CardHolderInputField } from "./components/CardHolderInputField";
+import { CardNameInputField } from "./components/CardNameInputField";
 import { ExpirationSelectInputField } from "./components/ExpirationSelectInputField";
 import { CCVInputField } from "./components/CCVInputField";
 import { CardInformation } from "../../types";
-import { extractOnlyNumbers } from "../utils/utils";
+import { Button } from "@mui/material";
+import { creditCardSchema } from "./validation/creditCardValidation";
 import "./style.css";
 
 interface CreditCardProps {
@@ -37,6 +37,9 @@ const CreditCard: React.FC<CreditCardProps> = ({
     inputRefs.current[0]?.focus();
   }, []);
 
+  const handleSubmit = (event: React.FocusEvent<HTMLFormElement>) => {
+    event.preventDefault();
+  };
   return (
     <div className="checkout">
       <CreditCardBox
@@ -48,13 +51,13 @@ const CreditCard: React.FC<CreditCardProps> = ({
         cardFlipToBackside={cardFlipToBackside}
       />
 
-      <form className="form" autoComplete="off" noValidate>
+      <form autoComplete="off" noValidate onSubmit={handleSubmit}>
         <CardNumberInputField
           cardNumArray={cardNumArray}
           setCardNumArray={setCardNumArray}
           inputRefs={inputRefs}
         />
-        <CardHolderInputField
+        <CardNameInputField
           cardName={cardName}
           setCardName={setCardName}
         />
@@ -70,9 +73,15 @@ const CreditCard: React.FC<CreditCardProps> = ({
           onFocus={() => setCardFlipToBackside(true)}
           onBlur={() => setCardFlipToBackside(false)}
         />
-        <button className="btn">
-          <i className="fa fa-lock"></i> submit
-        </button>
+
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          fullWidth
+        >
+          Submit
+        </Button>
       </form>
     </div>
   );

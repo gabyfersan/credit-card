@@ -1,6 +1,14 @@
-import React from "react";
-import { TextField, Box, Typography } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import {
+  TextField,
+  Box,
+  Typography,
+  FormControl,
+  FormHelperText,
+} from "@mui/material";
 import { extractOnlyNumbers } from "../../utils/utils";
+import { creditCardSchema } from "../validation/creditCardValidation";
+import { handleOnBlurForErrorHandling } from "../../utils/utils";
 
 interface CardNumberInputFieldProps {
   cardNumArray: number[];
@@ -11,6 +19,10 @@ interface CardNumberInputFieldProps {
 export const CardNumberInputField: React.FC<
   CardNumberInputFieldProps
 > = ({ cardNumArray, setCardNumArray, inputRefs }) => {
+  const [errorCardNumArray, setErrorCardNumArray] = useState<
+    string | null
+  >(null);
+
   const handleKeyUp = (
     event: React.KeyboardEvent<HTMLInputElement>,
     index: number
@@ -64,24 +76,51 @@ export const CardNumberInputField: React.FC<
     });
   };
 
+  const handleOnBlurForNumberInput = (
+    event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>,
+    index: number
+  ) => {
+    if (index !== 3) {
+      return;
+    }
+
+    handleOnBlurForErrorHandling(
+      {
+        name: event.target.name,
+        value: extractOnlyNumbers(cardNumArray, 0, 16).join(""),
+      },
+      setErrorCardNumArray,
+      creditCardSchema.pick({ cardNumArray: true })
+    );
+  };
   return (
     <Box>
-      <Typography component="legend">Card Number</Typography>
-      <Box display="flex" gap={1}>
-        {[0, 1, 2, 3].map((index) => (
-          <TextField
-            key={index}
-            type="text"
-            id={`card-number-${index}`}
-            inputProps={{ maxLength: 4 }}
-            inputRef={(el) => (inputRefs.current[index] = el)}
-            onKeyUp={(e) => handleKeyUp(e, index)}
-            value={extractOnlyNumbers(cardNumArray, index).join("")}
-            onChange={() => {}} // Adding empty onChange to suppress the warning
-            variant="outlined"
-          />
-        ))}
-      </Box>
+      <FormControl>
+        <Typography component="h2">Card Number</Typography>
+        <Box display="flex" gap={1}>
+          {[0, 1, 2, 3].map((index) => (
+            <TextField
+              key={index}
+              type="text"
+              name="cardNumArray"
+              id={`card-number-${index}`}
+              inputProps={{ maxLength: 4 }}
+              inputRef={(el) => (inputRefs.current[index] = el)}
+              onKeyUp={(e) => handleKeyUp(e, index)}
+              value={extractOnlyNumbers(cardNumArray, index).join("")}
+              onChange={() => {}} // Adding empty onChange to suppress the warning
+              variant="outlined"
+              margin="normal"
+              onBlur={(event) =>
+                handleOnBlurForNumberInput(event, index)
+              }
+            />
+          ))}
+        </Box>
+        <FormHelperText error={true}>
+          {errorCardNumArray ? errorCardNumArray : " "}
+        </FormHelperText>
+      </FormControl>
     </Box>
   );
 };
