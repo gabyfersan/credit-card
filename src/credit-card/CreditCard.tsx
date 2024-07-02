@@ -42,6 +42,7 @@ const CreditCard: React.FC<CreditCardProps> = ({
   useEffect(() => {
     inputRefs.current[0]?.focus();
   }, []);
+
   useEffect(() => {
     setIsErrorWhenFormSubmit(false);
   });
@@ -103,6 +104,7 @@ const CreditCard: React.FC<CreditCardProps> = ({
           variant="contained"
           color="primary"
           fullWidth
+          sx={{ marginTop: 2 }}
         >
           Submit
         </Button>

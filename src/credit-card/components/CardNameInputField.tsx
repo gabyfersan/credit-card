@@ -29,13 +29,13 @@ export const CardNameInputField: React.FC<
     <Box>
       <Typography component="h2">Card holder</Typography>
       <TextField
+        type="text"
         fullWidth
         name="cardName"
         value={cardName}
         onChange={(event) => setCardName(event.target.value)}
         error={!!errorCardName}
         helperText={errorCardName || " "}
-        FormHelperTextProps={{ style: { marginTop: "0" } }}
         onBlur={handleErrorCheck}
       />
     </Box>

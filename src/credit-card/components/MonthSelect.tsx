@@ -18,8 +18,6 @@ export const MonthSelect: React.FC<MonthSelectProps> = ({
     <FormControl fullWidth margin="normal">
       <InputLabel id="card-expiration-month-label">Month</InputLabel>
       <Select
-        labelId="card-expiration-month-label"
-        id="card-expiration-month"
         value={expMonth}
         label="Month"
         onChange={(event) => {
@@ -27,6 +25,8 @@ export const MonthSelect: React.FC<MonthSelectProps> = ({
         }}
         name="expMonth"
         onBlur={handleErrorCheckExpMonth}
+        error={!!errorExpMonth}
+        type="text"
       >
         <MenuItem value="">
           <em>None</em>

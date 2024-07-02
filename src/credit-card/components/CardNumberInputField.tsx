@@ -29,16 +29,17 @@ export const CardNumberInputField: React.FC<
   ) => {
     let newIndex = index;
     const isBackspace = event.key === "Backspace";
-    const isSingleKeyNotAnumber =
+    const isSingleKeyNotNumber =
       event.key.length === 1 && !/^[0-9]$/.test(event.key);
     const isInvalidKey = event.key.length > 1 && !isBackspace;
 
-    if (isInvalidKey || isSingleKeyNotAnumber) {
+    if (isInvalidKey || isSingleKeyNotNumber) {
       return;
     }
     const numberToAdd = parseInt(event.key);
     let subArray;
-    // True if any of the first three input fields is in focus and full of numbers, => change focus to next input field
+    // Check if any of the first three input fields is in focus and full of numbers, and the user has not pressed backspace.
+    // If true, change focus to the next input field.
     if (
       extractOnlyNumbers(cardNumArray, newIndex).length === 4 &&
       newIndex < 3 &&
@@ -47,7 +48,8 @@ export const CardNumberInputField: React.FC<
       newIndex += 1;
       inputRefs.current[newIndex]?.focus();
     }
-    // True if any of the last three input fields is in focus, empty, and the user presses backspace = change focus to previous input field
+    //Check if any of the last three input fields is in focus and empty, and the user pressed backspace.
+    //If true, change focus to the previous input field.
     if (
       extractOnlyNumbers(cardNumArray, newIndex).length === 0 &&
       newIndex > 0 &&
@@ -100,7 +102,6 @@ export const CardNumberInputField: React.FC<
               key={index}
               type="text"
               name="cardNumArray"
-              id={`card-number-${index}`}
               inputProps={{ maxLength: 4 }}
               inputRef={(el) => (inputRefs.current[index] = el)}
               onKeyUp={(e) =>
@@ -110,9 +111,9 @@ export const CardNumberInputField: React.FC<
                 )
               }
               value={extractOnlyNumbers(cardNumArray, index).join("")}
-              onChange={() => {}} // Adding empty onChange to suppress the warning
-              variant="outlined"
+              onChange={() => {}} // Adding empty onChange to suppress warning
               onBlur={() => index === 3 && handleErrorCheck()}
+              error={!!errorCardNumArray}
             />
           ))}
         </Box>

@@ -19,13 +19,13 @@ export const YearSelect: React.FC<YearSelectProps> = ({
     <FormControl fullWidth margin="normal">
       <InputLabel id="card-expiration-year-label">Year</InputLabel>
       <Select
-        labelId="card-expiration-year-label"
-        id="card-expiration-year"
         value={expYear}
         label="Year"
         onChange={(event) => setExpYear(event.target.value)}
         name="expYear"
         onBlur={handleErrorCheckExpYear}
+        error={!!errorExpYear}
+        type="text"
       >
         <MenuItem value="">
           <em>None</em>

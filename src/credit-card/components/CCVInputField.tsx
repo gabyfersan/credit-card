@@ -32,23 +32,20 @@ export const CCVInputField: React.FC<CCVInputFieldProps> = ({
   return (
     <Box>
       <Typography component="h2">CCV</Typography>
-
       <TextField
-        id="card-ccv"
         type="text"
-        variant="outlined"
-        inputProps={{ maxLength: 3 }}
         value={cardCcv}
         onChange={(event) => setCardCcv(event.target.value)}
+        name="cardCcv"
         onFocus={onFocus}
         onBlur={() => {
           handleErrorCheck();
           onBlur();
         }}
         fullWidth
-        name="cardCcv"
         error={!!errorCardCcv}
         helperText={errorCardCcv || " "}
+        inputProps={{ maxLength: 3 }}
       />
     </Box>
   );
