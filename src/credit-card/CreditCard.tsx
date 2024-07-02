@@ -4,7 +4,7 @@ import { CardNumberInputField } from "./components/CardNumberInputField";
 import { CardNameInputField } from "./components/CardNameInputField";
 import { ExpirationSelectInputField } from "./components/ExpirationSelectInputField";
 import { CCVInputField } from "./components/CCVInputField";
-import { CardInformation } from "../../types";
+import { CardInformation } from "./types";
 import { Button } from "@mui/material";
 import { creditCardSchema } from "./validation/creditCardValidation";
 import "./style.css";
@@ -49,7 +49,7 @@ const CreditCard: React.FC<CreditCardProps> = ({
   const handleSubmit = (event: React.FocusEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const formValues = {
+    const formValues: CardInformation = {
       cardNum: extractOnlyNumbers(cardNumArray, 0, 16).join(""),
       cardName,
       expMonth,

@@ -10,15 +10,8 @@ import {
   FormHelperText,
 } from "@mui/material";
 import { creditCardSchema } from "../validation/creditCardValidation";
-import { handleOnBlurForErrorHandling } from "../../utils/utils";
-
-interface ExpirationSelectInputFieldProps {
-  expMonth: string;
-  setExpMonth: (value: string) => void;
-  expYear: string;
-  setExpYear: (value: string) => void;
-  isErrorWhenFormSubmit: boolean;
-}
+import { checkForErrorInFormFields } from "../../utils/utils";
+import { ExpirationSelectInputFieldProps } from "../types";
 
 export const ExpirationSelectInputField: React.FC<
   ExpirationSelectInputFieldProps
@@ -37,38 +30,32 @@ export const ExpirationSelectInputField: React.FC<
   );
   const currentYear = new Date().getFullYear();
 
-  const handleOnBlurForYearAndMonth = (
-    event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>,
-    setError: React.Dispatch<React.SetStateAction<string | null>>
-  ) => {
-    const name = event?.target?.name as string;
-    handleOnBlurForErrorHandling(
-      event.target,
-      setError,
-      name === "expMonth"
-        ? creditCardSchema.pick({ expMonth: true })
-        : creditCardSchema.pick({ expYear: true })
+  const handleErrorCheckExpYear = () => {
+    checkForErrorInFormFields(
+      {
+        name: "expYear",
+        value: expYear,
+      },
+      setErrorExpYear,
+      creditCardSchema.pick({ expYear: true })
+    );
+  };
+
+  const handleErrorCheckExpMonth = () => {
+    checkForErrorInFormFields(
+      {
+        name: "expMonth",
+        value: expMonth,
+      },
+      setErrorExpMonth,
+      creditCardSchema.pick({ expMonth: true })
     );
   };
 
   useEffect(() => {
     if (isErrorWhenFormSubmit) {
-      handleOnBlurForErrorHandling(
-        {
-          name: "expMonth",
-          value: expMonth,
-        },
-        setErrorExpMonth,
-        creditCardSchema.pick({ expMonth: true })
-      );
-      handleOnBlurForErrorHandling(
-        {
-          name: "expYear",
-          value: expYear,
-        },
-        setErrorExpYear,
-        creditCardSchema.pick({ expYear: true })
-      );
+      handleErrorCheckExpMonth();
+      handleErrorCheckExpYear();
     }
   }, [isErrorWhenFormSubmit]);
 
@@ -90,9 +77,7 @@ export const ExpirationSelectInputField: React.FC<
                 setExpMonth(event.target.value);
               }}
               name="expMonth"
-              onBlur={(event) =>
-                handleOnBlurForYearAndMonth(event, setErrorExpMonth)
-              }
+              onBlur={handleErrorCheckExpMonth}
             >
               <MenuItem value="">
                 <em>None</em>
@@ -123,9 +108,7 @@ export const ExpirationSelectInputField: React.FC<
               label="Year"
               onChange={(event) => setExpYear(event.target.value)}
               name="expYear"
-              onBlur={(event) =>
-                handleOnBlurForYearAndMonth(event, setErrorExpYear)
-              }
+              onBlur={handleErrorCheckExpYear}
             >
               <MenuItem value="">
                 <em>None</em>

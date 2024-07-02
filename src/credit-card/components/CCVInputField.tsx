@@ -1,15 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { TextField, Box, Typography } from "@mui/material";
 import { creditCardSchema } from "../validation/creditCardValidation";
-import { handleOnBlurForErrorHandling } from "../../utils/utils";
-
-interface CCVInputFieldProps {
-  cardCcv: string;
-  setCardCcv: (value: string) => void;
-  onFocus: () => void;
-  onBlur: () => void;
-  isErrorWhenFormSubmit: boolean;
-}
+import { checkForErrorInFormFields } from "../../utils/utils";
+import { CCVInputFieldProps } from "../types";
 
 export const CCVInputField: React.FC<CCVInputFieldProps> = ({
   cardCcv,
@@ -22,29 +15,20 @@ export const CCVInputField: React.FC<CCVInputFieldProps> = ({
     null
   );
 
-  const handleOnBlurForCcv = (
-    event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    handleOnBlurForErrorHandling(
-      event.target,
+  const handleErrorCheck = () => {
+    checkForErrorInFormFields(
+      {
+        name: "cardCcv",
+        value: cardCcv,
+      },
       setErrorCardCcv,
       creditCardSchema.pick({ cardCcv: true })
     );
-    onBlur();
   };
-
   useEffect(() => {
-    if (isErrorWhenFormSubmit) {
-      handleOnBlurForErrorHandling(
-        {
-          name: "cardCcv",
-          value: cardCcv,
-        },
-        setErrorCardCcv,
-        creditCardSchema.pick({ cardCcv: true })
-      );
-    }
+    isErrorWhenFormSubmit && handleErrorCheck();
   }, [isErrorWhenFormSubmit]);
+
   return (
     <Box>
       <Typography component="h2">CCV</Typography>
@@ -57,13 +41,14 @@ export const CCVInputField: React.FC<CCVInputFieldProps> = ({
         value={cardCcv}
         onChange={(event) => setCardCcv(event.target.value)}
         onFocus={onFocus}
-        onBlur={(event) => handleOnBlurForCcv(event)}
+        onBlur={() => {
+          handleErrorCheck();
+          onBlur();
+        }}
         fullWidth
         name="cardCcv"
-        margin="normal"
         error={!!errorCardCcv}
         helperText={errorCardCcv || " "}
-        FormHelperTextProps={{ style: { marginTop: "0" } }}
       />
     </Box>
   );

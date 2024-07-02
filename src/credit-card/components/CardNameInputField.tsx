@@ -1,13 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { TextField, Box, Typography } from "@mui/material";
 import { creditCardSchema } from "../validation/creditCardValidation";
-import { handleOnBlurForErrorHandling } from "../../utils/utils";
-
-interface CardHolderInputFieldProps {
-  cardName: string;
-  setCardName: React.Dispatch<React.SetStateAction<string>>;
-  isErrorWhenFormSubmit: boolean;
-}
+import { checkForErrorInFormFields } from "../../utils/utils";
+import { CardHolderInputFieldProps } from "../types";
 
 export const CardNameInputField: React.FC<
   CardHolderInputFieldProps
@@ -16,17 +11,18 @@ export const CardNameInputField: React.FC<
     null
   );
 
+  const handleErrorCheck = () => {
+    checkForErrorInFormFields(
+      {
+        name: "cardName",
+        value: cardName,
+      },
+      setErrorCardName,
+      creditCardSchema.pick({ cardName: true })
+    );
+  };
   useEffect(() => {
-    if (isErrorWhenFormSubmit) {
-      handleOnBlurForErrorHandling(
-        {
-          name: "cardName",
-          value: cardName,
-        },
-        setErrorCardName,
-        creditCardSchema.pick({ cardName: true })
-      );
-    }
+    isErrorWhenFormSubmit && handleErrorCheck();
   }, [isErrorWhenFormSubmit]);
 
   return (
@@ -37,17 +33,10 @@ export const CardNameInputField: React.FC<
         name="cardName"
         value={cardName}
         onChange={(event) => setCardName(event.target.value)}
-        margin="normal"
         error={!!errorCardName}
         helperText={errorCardName || " "}
         FormHelperTextProps={{ style: { marginTop: "0" } }}
-        onBlur={(event) =>
-          handleOnBlurForErrorHandling(
-            event.target,
-            setErrorCardName,
-            creditCardSchema.pick({ cardName: true })
-          )
-        }
+        onBlur={handleErrorCheck}
       />
     </Box>
   );

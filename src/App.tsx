@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import CreditCard from "./credit-card/CreditCard";
-import { CardInformation } from "../types";
+import { CardInformation } from "./credit-card/types";
 
 const App = () => {
   const [cardNumber, setCardNumber] = useState<string>("");

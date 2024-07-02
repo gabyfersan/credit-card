@@ -8,14 +8,8 @@ import {
 } from "@mui/material";
 import { extractOnlyNumbers } from "../../utils/utils";
 import { creditCardSchema } from "../validation/creditCardValidation";
-import { handleOnBlurForErrorHandling } from "../../utils/utils";
-
-interface CardNumberInputFieldProps {
-  cardNumArray: number[];
-  setCardNumArray: React.Dispatch<React.SetStateAction<number[]>>;
-  inputRefs: React.MutableRefObject<(HTMLInputElement | null)[]>;
-  isErrorWhenFormSubmit: boolean;
-}
+import { checkForErrorInFormFields } from "../../utils/utils";
+import { CardNumberInputFieldProps } from "../types";
 
 export const CardNumberInputField: React.FC<
   CardNumberInputFieldProps
@@ -83,27 +77,11 @@ export const CardNumberInputField: React.FC<
   };
 
   useEffect(() => {
-    if (isErrorWhenFormSubmit) {
-      handleOnBlurForErrorHandling(
-        {
-          name: "cardNum",
-          value: extractOnlyNumbers(cardNumArray, 0, 16).join(""),
-        },
-        setErrorCardNumArray,
-        creditCardSchema.pick({ cardNum: true })
-      );
-    }
+    isErrorWhenFormSubmit && handleErrorCheck();
   }, [isErrorWhenFormSubmit]);
 
-  const handleOnBlurForNumberInput = (
-    event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>,
-    index: number
-  ) => {
-    if (index !== 3) {
-      return;
-    }
-
-    handleOnBlurForErrorHandling(
+  const handleErrorCheck = () => {
+    checkForErrorInFormFields(
       {
         name: "cardNum",
         value: extractOnlyNumbers(cardNumArray, 0, 16).join(""),
@@ -125,14 +103,16 @@ export const CardNumberInputField: React.FC<
               id={`card-number-${index}`}
               inputProps={{ maxLength: 4 }}
               inputRef={(el) => (inputRefs.current[index] = el)}
-              onKeyUp={(e) => handleKeyUp(e, index)}
+              onKeyUp={(e) =>
+                handleKeyUp(
+                  e as React.KeyboardEvent<HTMLInputElement>,
+                  index
+                )
+              }
               value={extractOnlyNumbers(cardNumArray, index).join("")}
               onChange={() => {}} // Adding empty onChange to suppress the warning
               variant="outlined"
-              margin="normal"
-              onBlur={(event) =>
-                handleOnBlurForNumberInput(event, index)
-              }
+              onBlur={() => index === 3 && handleErrorCheck()}
             />
           ))}
         </Box>

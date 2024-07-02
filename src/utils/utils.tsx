@@ -1,6 +1,5 @@
 import { z } from "zod";
 import React from "react";
-
 // Example  extractOnlyNumbers ([1, 1, 1, null, null, null], 0) => [1, 1, 1]
 export const extractOnlyNumbers = (
   cardNumArray: Array<number>,
@@ -12,7 +11,7 @@ export const extractOnlyNumbers = (
     .filter((item: number) => typeof item === "number");
 };
 
-export const handleOnBlurForErrorHandling = (
+export const checkForErrorInFormFields = (
   { name, value }: { name: string; value: string },
   setErrorState: React.Dispatch<React.SetStateAction<string | null>>,
   creditCardSchema: z.ZodSchema<any>
