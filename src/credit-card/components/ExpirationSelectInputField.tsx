@@ -1,17 +1,10 @@
 import React, { useState, useEffect } from "react";
-import {
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  Grid,
-  Box,
-  Typography,
-  FormHelperText,
-} from "@mui/material";
+import { Grid, Box, Typography } from "@mui/material";
 import { creditCardSchema } from "../validation/creditCardValidation";
 import { checkForErrorInFormFields } from "../../utils/utils";
 import { ExpirationSelectInputFieldProps } from "../types";
+import { MonthSelect } from "./MonthSelect"; // Adjust the import path as necessary
+import { YearSelect } from "./YearSelect"; // Adjust the import path as necessary
 
 export const ExpirationSelectInputField: React.FC<
   ExpirationSelectInputFieldProps
@@ -61,71 +54,24 @@ export const ExpirationSelectInputField: React.FC<
 
   return (
     <Box>
-      <Typography component="h2">Experation date</Typography>
-      <Grid container spacing={2} className="fieldset-expiration">
+      <Typography component="h2">Expiration Date</Typography>
+      <Grid container spacing={2}>
         <Grid item xs={6}>
-          <FormControl fullWidth margin="normal">
-            <InputLabel id="card-expiration-month-label">
-              Month
-            </InputLabel>
-            <Select
-              labelId="card-expiration-month-label"
-              id="card-expiration-month"
-              value={expMonth}
-              label="Month"
-              onChange={(event) => {
-                setExpMonth(event.target.value);
-              }}
-              name="expMonth"
-              onBlur={handleErrorCheckExpMonth}
-            >
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              {Array.from({ length: 12 }, (_, i) => (
-                <MenuItem
-                  key={i}
-                  value={String(i + 1).padStart(2, "0")}
-                >
-                  {String(i + 1).padStart(2, "0")}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <FormHelperText error={true}>
-            {errorExpMonth ? errorExpMonth : " "}
-          </FormHelperText>
+          <MonthSelect
+            expMonth={expMonth}
+            setExpMonth={setExpMonth}
+            errorExpMonth={errorExpMonth}
+            handleErrorCheckExpMonth={handleErrorCheckExpMonth}
+          />
         </Grid>
         <Grid item xs={6}>
-          <FormControl fullWidth margin="normal">
-            <InputLabel id="card-expiration-year-label">
-              Year
-            </InputLabel>
-            <Select
-              labelId="card-expiration-year-label"
-              id="card-expiration-year"
-              value={expYear}
-              label="Year"
-              onChange={(event) => setExpYear(event.target.value)}
-              name="expYear"
-              onBlur={handleErrorCheckExpYear}
-            >
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              {Array.from({ length: 5 }, (_, i) => (
-                <MenuItem
-                  key={i}
-                  value={String(currentYear + i).slice(2)}
-                >
-                  {String(currentYear + i)}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <FormHelperText error={true}>
-            {errorExpYear ? errorExpYear : " "}
-          </FormHelperText>
+          <YearSelect
+            expYear={expYear}
+            setExpYear={setExpYear}
+            errorExpYear={errorExpYear}
+            handleErrorCheckExpYear={handleErrorCheckExpYear}
+            currentYear={currentYear}
+          />
         </Grid>
       </Grid>
     </Box>

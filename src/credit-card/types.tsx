@@ -34,3 +34,18 @@ export interface ExpirationSelectInputFieldProps {
   setExpYear: React.Dispatch<React.SetStateAction<string>>;
   isErrorWhenFormSubmit: boolean;
 }
+
+export interface YearSelectProps {
+  expYear: string;
+  setExpYear: (value: string) => void;
+  errorExpYear: string | null;
+  handleErrorCheckExpYear: () => void;
+  currentYear: number;
+}
+
+export interface MonthSelectProps {
+  expMonth: string;
+  setExpMonth: (value: string) => void;
+  errorExpMonth: string | null;
+  handleErrorCheckExpMonth: () => void;
+}

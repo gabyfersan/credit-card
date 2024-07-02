@@ -15,7 +15,7 @@ export const creditCardSchema = z.object({
     .length(16, "Credit card number must be exactly 16 digits"),
   expYear: z
     .string()
-    .regex(/^\d{2}$/, { message: "Year must be 2 digits" })
+    .regex(/^\d{2}$/, { message: "Year must be 2 digit" })
     .refine(
       (year) => {
         const yearNumber = parseInt(year, 10);
