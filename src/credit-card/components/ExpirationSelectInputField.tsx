@@ -17,11 +17,18 @@ interface ExpirationSelectInputFieldProps {
   setExpMonth: (value: string) => void;
   expYear: string;
   setExpYear: (value: string) => void;
+  isErrorWhenFormSubmit: boolean;
 }
 
 export const ExpirationSelectInputField: React.FC<
   ExpirationSelectInputFieldProps
-> = ({ expMonth, setExpMonth, expYear, setExpYear }) => {
+> = ({
+  expMonth,
+  setExpMonth,
+  expYear,
+  setExpYear,
+  isErrorWhenFormSubmit,
+}) => {
   const [errorExpYear, setErrorExpYear] = useState<string | null>(
     null
   );
@@ -43,6 +50,27 @@ export const ExpirationSelectInputField: React.FC<
         : creditCardSchema.pick({ expYear: true })
     );
   };
+
+  useEffect(() => {
+    if (isErrorWhenFormSubmit) {
+      handleOnBlurForErrorHandling(
+        {
+          name: "expMonth",
+          value: expMonth,
+        },
+        setErrorExpMonth,
+        creditCardSchema.pick({ expMonth: true })
+      );
+      handleOnBlurForErrorHandling(
+        {
+          name: "expYear",
+          value: expYear,
+        },
+        setErrorExpYear,
+        creditCardSchema.pick({ expYear: true })
+      );
+    }
+  }, [isErrorWhenFormSubmit]);
 
   return (
     <Box>

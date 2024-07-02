@@ -8,6 +8,10 @@ import { CardInformation } from "../../types";
 import { Button } from "@mui/material";
 import { creditCardSchema } from "./validation/creditCardValidation";
 import "./style.css";
+import {
+  checkAllFieldInForm,
+  extractOnlyNumbers,
+} from "../utils/utils";
 
 interface CreditCardProps {
   setCardInformation: (a: CardInformation) => void;
@@ -32,13 +36,29 @@ const CreditCard: React.FC<CreditCardProps> = ({
   const [cardName, setCardName] = useState<string>(cardHolder);
   const [cardFlipToBackside, setCardFlipToBackside] =
     useState<boolean>(false);
+  const [isErrorWhenFormSubmit, setIsErrorWhenFormSubmit] =
+    useState<boolean>(false);
 
   useEffect(() => {
     inputRefs.current[0]?.focus();
   }, []);
+  useEffect(() => {
+    setIsErrorWhenFormSubmit(false);
+  });
 
   const handleSubmit = (event: React.FocusEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    const formValues = {
+      cardNum: extractOnlyNumbers(cardNumArray, 0, 16).join(""),
+      cardName,
+      expMonth,
+      expYear,
+      cardCcv,
+    };
+    const result = checkAllFieldInForm(creditCardSchema, formValues);
+    setIsErrorWhenFormSubmit(!result);
+    result && setCardInformation(formValues);
   };
   return (
     <div className="checkout">
@@ -56,22 +76,26 @@ const CreditCard: React.FC<CreditCardProps> = ({
           cardNumArray={cardNumArray}
           setCardNumArray={setCardNumArray}
           inputRefs={inputRefs}
+          isErrorWhenFormSubmit={isErrorWhenFormSubmit}
         />
         <CardNameInputField
           cardName={cardName}
           setCardName={setCardName}
+          isErrorWhenFormSubmit={isErrorWhenFormSubmit}
         />
         <ExpirationSelectInputField
           expMonth={expMonth}
           setExpMonth={setExpMonth}
           expYear={expYear}
           setExpYear={setExpYear}
+          isErrorWhenFormSubmit={isErrorWhenFormSubmit}
         />
         <CCVInputField
           cardCcv={cardCcv}
           setCardCcv={setCardCcv}
           onFocus={() => setCardFlipToBackside(true)}
           onBlur={() => setCardFlipToBackside(false)}
+          isErrorWhenFormSubmit={isErrorWhenFormSubmit}
         />
 
         <Button

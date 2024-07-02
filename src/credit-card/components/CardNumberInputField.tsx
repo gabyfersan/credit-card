@@ -14,11 +14,17 @@ interface CardNumberInputFieldProps {
   cardNumArray: number[];
   setCardNumArray: React.Dispatch<React.SetStateAction<number[]>>;
   inputRefs: React.MutableRefObject<(HTMLInputElement | null)[]>;
+  isErrorWhenFormSubmit: boolean;
 }
 
 export const CardNumberInputField: React.FC<
   CardNumberInputFieldProps
-> = ({ cardNumArray, setCardNumArray, inputRefs }) => {
+> = ({
+  cardNumArray,
+  setCardNumArray,
+  inputRefs,
+  isErrorWhenFormSubmit,
+}) => {
   const [errorCardNumArray, setErrorCardNumArray] = useState<
     string | null
   >(null);
@@ -76,6 +82,19 @@ export const CardNumberInputField: React.FC<
     });
   };
 
+  useEffect(() => {
+    if (isErrorWhenFormSubmit) {
+      handleOnBlurForErrorHandling(
+        {
+          name: "cardNum",
+          value: extractOnlyNumbers(cardNumArray, 0, 16).join(""),
+        },
+        setErrorCardNumArray,
+        creditCardSchema.pick({ cardNum: true })
+      );
+    }
+  }, [isErrorWhenFormSubmit]);
+
   const handleOnBlurForNumberInput = (
     event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>,
     index: number
@@ -86,11 +105,11 @@ export const CardNumberInputField: React.FC<
 
     handleOnBlurForErrorHandling(
       {
-        name: event.target.name,
+        name: "cardNum",
         value: extractOnlyNumbers(cardNumArray, 0, 16).join(""),
       },
       setErrorCardNumArray,
-      creditCardSchema.pick({ cardNumArray: true })
+      creditCardSchema.pick({ cardNum: true })
     );
   };
   return (

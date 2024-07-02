@@ -8,6 +8,7 @@ interface CCVInputFieldProps {
   setCardCcv: (value: string) => void;
   onFocus: () => void;
   onBlur: () => void;
+  isErrorWhenFormSubmit: boolean;
 }
 
 export const CCVInputField: React.FC<CCVInputFieldProps> = ({
@@ -15,6 +16,7 @@ export const CCVInputField: React.FC<CCVInputFieldProps> = ({
   setCardCcv,
   onFocus,
   onBlur,
+  isErrorWhenFormSubmit,
 }) => {
   const [errorCardCcv, setErrorCardCcv] = useState<string | null>(
     null
@@ -31,6 +33,18 @@ export const CCVInputField: React.FC<CCVInputFieldProps> = ({
     onBlur();
   };
 
+  useEffect(() => {
+    if (isErrorWhenFormSubmit) {
+      handleOnBlurForErrorHandling(
+        {
+          name: "cardCcv",
+          value: cardCcv,
+        },
+        setErrorCardCcv,
+        creditCardSchema.pick({ cardCcv: true })
+      );
+    }
+  }, [isErrorWhenFormSubmit]);
   return (
     <Box>
       <Typography component="h2">CCV</Typography>

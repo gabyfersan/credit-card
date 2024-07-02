@@ -1,6 +1,5 @@
 import { z } from "zod";
 import React from "react";
-import { MenuItem } from "@mui/material";
 
 // Example  extractOnlyNumbers ([1, 1, 1, null, null, null], 0) => [1, 1, 1]
 export const extractOnlyNumbers = (
@@ -26,4 +25,18 @@ export const handleOnBlurForErrorHandling = (
   } else {
     setErrorState(result.error.errors[0].message);
   }
+};
+
+export const checkAllFieldInForm = (
+  creditCardSchema: z.ZodSchema<any>,
+  formValues: {
+    cardNum: string;
+    expMonth: string;
+    expYear: string;
+    cardCcv: string;
+    cardName: string;
+  }
+) => {
+  const result = creditCardSchema.safeParse(formValues);
+  return result.success;
 };
