@@ -6,6 +6,15 @@ export interface CardInformation {
   cardCcv: string;
 }
 
+export interface CreditCardBoxProps {
+  cardNumArray: Array<number>;
+  cardName: string;
+  expMonth: string;
+  expYear: string;
+  cardCcv: string;
+  cardFlipToBackside: boolean;
+}
+
 export interface CardHolderInputFieldProps {
   cardName: string;
   setCardName: React.Dispatch<React.SetStateAction<string>>;

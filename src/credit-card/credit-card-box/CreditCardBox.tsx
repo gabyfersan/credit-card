@@ -1,15 +1,6 @@
 import React from "react";
 import "./style.css";
-//import { Form, Row, Col, Button } from 'react-bootstrap';
-
-interface CreditCardBoxProps {
-  cardNumArray: Array<number>;
-  cardName: string;
-  expMonth: string;
-  expYear: string;
-  cardCcv: string;
-  cardFlipToBackside: boolean;
-}
+import { CreditCardBoxProps } from "../types";
 
 const CreditCardBox: React.FC<CreditCardBoxProps> = ({
   cardNumArray,
