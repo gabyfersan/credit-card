@@ -4,7 +4,7 @@ import { CardNumberInputField } from "./components/CardNumberInputField";
 import { CardNameInputField } from "./components/CardNameInputField";
 import { ExpirationSelectInputField } from "./components/ExpirationSelectInputField";
 import { CCVInputField } from "./components/CCVInputField";
-import { CardInformation } from "./types";
+import { CardInformation, CreditCardProps } from "./types";
 import { Button } from "@mui/material";
 import { creditCardSchema } from "./validation/creditCardValidation";
 import "./style.css";
@@ -12,12 +12,6 @@ import {
   checkAllFieldInForm,
   extractOnlyNumbers,
 } from "../utils/utils";
-
-interface CreditCardProps {
-  setCardInformation: (a: CardInformation) => void;
-  cardHolder: string;
-  cardNumber: string;
-}
 
 const CreditCard: React.FC<CreditCardProps> = ({
   setCardInformation,

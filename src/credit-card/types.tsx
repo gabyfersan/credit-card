@@ -6,6 +6,14 @@ export interface CardInformation {
   cardCcv: string;
 }
 
+export interface CreditCardProps {
+  setCardInformation: React.Dispatch<
+    React.SetStateAction<CardInformation>
+  >;
+  cardHolder: string;
+  cardNumber: string;
+}
+
 export interface CreditCardBoxProps {
   cardNumArray: Array<number>;
   cardName: string;
@@ -46,7 +54,7 @@ export interface ExpirationSelectInputFieldProps {
 
 export interface YearSelectProps {
   expYear: string;
-  setExpYear: (value: string) => void;
+  setExpYear: React.Dispatch<React.SetStateAction<string>>;
   errorExpYear: string | null;
   handleErrorCheckExpYear: () => void;
   currentYear: number;
@@ -54,7 +62,7 @@ export interface YearSelectProps {
 
 export interface MonthSelectProps {
   expMonth: string;
-  setExpMonth: (value: string) => void;
+  setExpMonth: React.Dispatch<React.SetStateAction<string>>;
   errorExpMonth: string | null;
   handleErrorCheckExpMonth: () => void;
 }

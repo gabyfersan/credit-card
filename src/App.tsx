@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import CreditCard from "./credit-card/CreditCard";
 import { CardInformation } from "./credit-card/types";
 

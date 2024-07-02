@@ -27,7 +27,7 @@ export const CardNameInputField: React.FC<
 
   return (
     <Box>
-      <Typography component="h2">Card holder</Typography>
+      <Typography component="h2">Card Holder</Typography>
       <TextField
         type="text"
         fullWidth

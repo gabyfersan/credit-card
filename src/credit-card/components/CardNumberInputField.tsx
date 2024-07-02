@@ -36,7 +36,7 @@ export const CardNumberInputField: React.FC<
     if (isInvalidKey || isSingleKeyNotNumber) {
       return;
     }
-    const numberToAdd = parseInt(event.key);
+    const numberToAdd = parseInt(event.key, 10);
     let subArray;
     // Check if any of the first three input fields is in focus and full of numbers, and the user has not pressed backspace.
     // If true, change focus to the next input field.
@@ -71,7 +71,7 @@ export const CardNumberInputField: React.FC<
       Array(4 - subArray.length).fill(null)
     );
 
-    setCardNumArray((prevArray) => {
+    setCardNumArray((prevArray: number[]) => {
       const newArray = [...prevArray];
       newArray.splice(newIndex * 4, 4, ...fillArrayWithNulls);
       return newArray;

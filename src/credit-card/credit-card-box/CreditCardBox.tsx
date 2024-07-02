@@ -52,7 +52,7 @@ const CreditCardBox: React.FC<CreditCardBoxProps> = ({
             </svg>
           </div>
           <div className="number">
-            {cardNumArray.map((number, i) => {
+            {cardNumArray.map((number: number, i: number) => {
               let output;
 
               output = number === null ? "*" : number;
