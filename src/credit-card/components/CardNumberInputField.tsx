@@ -79,8 +79,9 @@ export const CardNumberInputField: React.FC<
   };
 
   useEffect(() => {
-    isErrorWhenFormSubmit && handleErrorCheck();
-  }, [isErrorWhenFormSubmit]);
+    (errorCardNumArray || isErrorWhenFormSubmit) &&
+      handleErrorCheck();
+  }, [isErrorWhenFormSubmit, cardNumArray]);
 
   const handleErrorCheck = () => {
     checkForErrorInFormFields(

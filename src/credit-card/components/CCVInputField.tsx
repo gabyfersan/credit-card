@@ -26,8 +26,8 @@ export const CCVInputField: React.FC<CCVInputFieldProps> = ({
     );
   };
   useEffect(() => {
-    isErrorWhenFormSubmit && handleErrorCheck();
-  }, [isErrorWhenFormSubmit]);
+    (errorCardCcv || isErrorWhenFormSubmit) && handleErrorCheck();
+  }, [isErrorWhenFormSubmit, cardCcv]);
 
   return (
     <Box>

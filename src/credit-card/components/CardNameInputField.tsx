@@ -22,8 +22,8 @@ export const CardNameInputField: React.FC<
     );
   };
   useEffect(() => {
-    isErrorWhenFormSubmit && handleErrorCheck();
-  }, [isErrorWhenFormSubmit]);
+    (errorCardName || isErrorWhenFormSubmit) && handleErrorCheck();
+  }, [isErrorWhenFormSubmit, cardName]);
 
   return (
     <Box>

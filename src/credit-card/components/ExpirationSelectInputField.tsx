@@ -46,11 +46,11 @@ export const ExpirationSelectInputField: React.FC<
   };
 
   useEffect(() => {
-    if (isErrorWhenFormSubmit) {
-      handleErrorCheckExpMonth();
+    (errorExpYear || isErrorWhenFormSubmit) &&
       handleErrorCheckExpYear();
-    }
-  }, [isErrorWhenFormSubmit]);
+    (errorExpMonth || isErrorWhenFormSubmit) &&
+      handleErrorCheckExpMonth();
+  }, [isErrorWhenFormSubmit, expMonth, expYear]);
 
   return (
     <Box>
