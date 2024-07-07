@@ -11,10 +11,11 @@ const CreditCardBox: React.FC<CreditCardBoxProps> = ({
   cardFlipToBackside,
 }) => {
   return (
-    <div
+    <aside
       className={`credit-card-box ${
         cardFlipToBackside ? "hover" : ""
       }`}
+      aria-hidden="true"
     >
       <div className="flip">
         <div className="front">
@@ -109,7 +110,7 @@ const CreditCardBox: React.FC<CreditCardBoxProps> = ({
           </div>
         </div>
       </div>
-    </div>
+    </aside>
   );
 };
 

@@ -148,16 +148,3 @@
   margin: -1.5625rem 0 0.875rem;
   color: #fff;
 }
-
-.the-most {
-  position: fixed;
-  z-index: 1;
-  bottom: 0;
-  left: 0;
-  width: 50vw;
-  max-width: 12.5rem;
-  padding: 0.625rem;
-}
-.the-most img {
-  max-width: 100%;
-}
