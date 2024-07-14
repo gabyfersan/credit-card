@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
-import { TextField, Box, Typography } from "@mui/material";
-import { creditCardSchema } from "../validation/creditCardValidation";
+import { Box, TextField, Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import { checkForErrorInFormFields } from "../../utils/utils";
 import { CardHolderInputFieldProps } from "../types";
+import { creditCardSchema } from "../validation/creditCardValidation";
 
-export const CardNameInputField: React.FC<
-  CardHolderInputFieldProps
-> = ({ cardName, setCardName, isErrorWhenFormSubmit }) => {
-  const [errorCardName, setErrorCardName] = useState<string | null>(
-    null
-  );
+export const CardNameInputField: React.FC<CardHolderInputFieldProps> = ({
+  cardName,
+  setCardName,
+  isErrorWhenFormSubmit,
+}) => {
+  const [errorCardName, setErrorCardName] = useState<string | null>(null);
 
   const handleErrorCheck = () => {
     checkForErrorInFormFields(
@@ -27,11 +27,15 @@ export const CardNameInputField: React.FC<
 
   return (
     <Box>
-      <Typography component="h2">Card Holder</Typography>
+      <Typography component='h2' for='name'>
+        Card Holder
+      </Typography>
       <TextField
-        type="text"
+        id='name'
+        type='text'
         fullWidth
-        name="cardName"
+        placeholder='John Doe'
+        name='cardName'
         value={cardName}
         onChange={(event) => setCardName(event.target.value)}
         error={!!errorCardName}

@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { TextField, Box, Typography } from "@mui/material";
-import { creditCardSchema } from "../validation/creditCardValidation";
+import { Box, TextField, Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import { checkForErrorInFormFields } from "../../utils/utils";
 import { CCVInputFieldProps } from "../types";
+import { creditCardSchema } from "../validation/creditCardValidation";
 
 export const CCVInputField: React.FC<CCVInputFieldProps> = ({
   cardCcv,
@@ -11,9 +11,7 @@ export const CCVInputField: React.FC<CCVInputFieldProps> = ({
   onBlur,
   isErrorWhenFormSubmit,
 }) => {
-  const [errorCardCcv, setErrorCardCcv] = useState<string | null>(
-    null
-  );
+  const [errorCardCcv, setErrorCardCcv] = useState<string | null>(null);
 
   const handleErrorCheck = () => {
     checkForErrorInFormFields(
@@ -31,19 +29,22 @@ export const CCVInputField: React.FC<CCVInputFieldProps> = ({
 
   return (
     <Box>
-      <Typography component="h2">CCV</Typography>
+      <Typography component='h2' for='ccv'>
+        CCV
+      </Typography>
       <TextField
-        type="text"
+        id='ccv'
+        type='text'
         value={cardCcv}
+        placeholder='123'
         onChange={(event) => setCardCcv(event.target.value)}
-        name="cardCcv"
+        name='cardCcv'
         onFocus={onFocus}
         onBlur={() => {
           handleErrorCheck();
           onBlur();
         }}
         fullWidth
-        label="lkjlk"
         error={!!errorCardCcv}
         helperText={errorCardCcv || " "}
         inputProps={{ maxLength: 3 }}

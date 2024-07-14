@@ -1,11 +1,11 @@
-import React from "react";
 import {
   FormControl,
+  FormHelperText,
   InputLabel,
   MenuItem,
   Select,
-  FormHelperText,
 } from "@mui/material";
+import React from "react";
 import { MonthSelectProps } from "../types";
 
 export const MonthSelect: React.FC<MonthSelectProps> = ({
@@ -15,20 +15,21 @@ export const MonthSelect: React.FC<MonthSelectProps> = ({
   handleErrorCheckExpMonth,
 }) => {
   return (
-    <FormControl fullWidth margin="normal">
-      <InputLabel id="card-expiration-month-label">Month</InputLabel>
+    <FormControl fullWidth margin='normal'>
+      <InputLabel id='card-expiration-month-label'>Month</InputLabel>
       <Select
+        id='month'
         value={expMonth}
-        label="Month"
+        label='Month'
         onChange={(event) => {
           setExpMonth(event.target.value);
         }}
-        name="expMonth"
+        name='expMonth'
         onBlur={handleErrorCheckExpMonth}
         error={!!errorExpMonth}
-        type="text"
+        type='text'
       >
-        <MenuItem value="">
+        <MenuItem value=''>
           <em>None</em>
         </MenuItem>
         {Array.from({ length: 12 }, (_, i) => (

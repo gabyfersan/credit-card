@@ -1,17 +1,14 @@
-import React, { useState, useRef, useEffect } from "react";
-import CreditCardBox from "./credit-card-box/CreditCardBox";
-import { CardNumberInputField } from "./components/CardNumberInputField";
-import { CardNameInputField } from "./components/CardNameInputField";
-import { ExpirationSelectInputField } from "./components/ExpirationSelectInputField";
-import { CCVInputField } from "./components/CCVInputField";
-import { CardInformation, CreditCardProps } from "./types";
 import { Button } from "@mui/material";
-import { creditCardSchema } from "./validation/creditCardValidation";
+import React, { useEffect, useRef, useState } from "react";
+import { checkAllFieldInForm, extractOnlyNumbers } from "../utils/utils";
+import { CardNameInputField } from "./components/CardNameInputField";
+import { CardNumberInputField } from "./components/CardNumberInputField";
+import { CCVInputField } from "./components/CCVInputField";
+import { ExpirationSelectInputField } from "./components/ExpirationSelectInputField";
+import CreditCardBox from "./credit-card-box/CreditCardBox";
 import "./style.css";
-import {
-  checkAllFieldInForm,
-  extractOnlyNumbers,
-} from "../utils/utils";
+import { CardInformation, CreditCardProps } from "./types";
+import { creditCardSchema } from "./validation/creditCardValidation";
 
 const CreditCard: React.FC<CreditCardProps> = ({
   setCardInformation,
@@ -20,16 +17,13 @@ const CreditCard: React.FC<CreditCardProps> = ({
 }) => {
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
   const [cardNumArray, setCardNumArray] = useState<number[]>(
-    cardNumber
-      ? cardNumber.split("").map(Number)
-      : new Array(16).fill(null)
+    cardNumber ? cardNumber.split("").map(Number) : new Array(16).fill(null)
   );
   const [expMonth, setExpMonth] = useState<string>("");
   const [expYear, setExpYear] = useState<string>("");
   const [cardCcv, setCardCcv] = useState<string>("");
   const [cardName, setCardName] = useState<string>(cardHolder);
-  const [cardFlipToBackside, setCardFlipToBackside] =
-    useState<boolean>(false);
+  const [cardFlipToBackside, setCardFlipToBackside] = useState<boolean>(false);
   const [isErrorWhenFormSubmit, setIsErrorWhenFormSubmit] =
     useState<boolean>(false);
 
@@ -56,7 +50,7 @@ const CreditCard: React.FC<CreditCardProps> = ({
     result && setCardInformation(formValues);
   };
   return (
-    <div className="checkout">
+    <section className='checkout'>
       <CreditCardBox
         cardNumArray={cardNumArray}
         cardName={cardName}
@@ -66,7 +60,7 @@ const CreditCard: React.FC<CreditCardProps> = ({
         cardFlipToBackside={cardFlipToBackside}
       />
 
-      <form autoComplete="off" noValidate onSubmit={handleSubmit}>
+      <form autoComplete='off' noValidate onSubmit={handleSubmit}>
         <CardNumberInputField
           cardNumArray={cardNumArray}
           setCardNumArray={setCardNumArray}
@@ -94,16 +88,16 @@ const CreditCard: React.FC<CreditCardProps> = ({
         />
 
         <Button
-          type="submit"
-          variant="contained"
-          color="primary"
+          type='submit'
+          variant='contained'
+          color='primary'
           fullWidth
           sx={{ marginTop: 2 }}
         >
           Submit
         </Button>
       </form>
-    </div>
+    </section>
   );
 };
 

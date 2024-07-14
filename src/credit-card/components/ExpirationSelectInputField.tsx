@@ -1,26 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { Grid, Box, Typography } from "@mui/material";
-import { creditCardSchema } from "../validation/creditCardValidation";
+import { Box, Grid, Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import { checkForErrorInFormFields } from "../../utils/utils";
 import { ExpirationSelectInputFieldProps } from "../types";
+import { creditCardSchema } from "../validation/creditCardValidation";
 import { MonthSelect } from "./MonthSelect"; // Adjust the import path as necessary
 import { YearSelect } from "./YearSelect"; // Adjust the import path as necessary
 
 export const ExpirationSelectInputField: React.FC<
   ExpirationSelectInputFieldProps
-> = ({
-  expMonth,
-  setExpMonth,
-  expYear,
-  setExpYear,
-  isErrorWhenFormSubmit,
-}) => {
-  const [errorExpYear, setErrorExpYear] = useState<string | null>(
-    null
-  );
-  const [errorExpMonth, setErrorExpMonth] = useState<string | null>(
-    null
-  );
+> = ({ expMonth, setExpMonth, expYear, setExpYear, isErrorWhenFormSubmit }) => {
+  const [errorExpYear, setErrorExpYear] = useState<string | null>(null);
+  const [errorExpMonth, setErrorExpMonth] = useState<string | null>(null);
   const currentYear = new Date().getFullYear();
 
   const handleErrorCheckExpYear = () => {
@@ -46,15 +36,15 @@ export const ExpirationSelectInputField: React.FC<
   };
 
   useEffect(() => {
-    (errorExpYear || isErrorWhenFormSubmit) &&
-      handleErrorCheckExpYear();
-    (errorExpMonth || isErrorWhenFormSubmit) &&
-      handleErrorCheckExpMonth();
+    (errorExpYear || isErrorWhenFormSubmit) && handleErrorCheckExpYear();
+    (errorExpMonth || isErrorWhenFormSubmit) && handleErrorCheckExpMonth();
   }, [isErrorWhenFormSubmit, expMonth, expYear]);
 
   return (
     <Box>
-      <Typography component="h2">Expiration Date</Typography>
+      <Typography component='h2' for='month'>
+        Expiration Date
+      </Typography>
       <Grid container spacing={2}>
         <Grid item xs={6}>
           <MonthSelect

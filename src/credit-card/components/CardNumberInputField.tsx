@@ -1,27 +1,27 @@
-import React, { useState, useEffect } from "react";
 import {
-  TextField,
   Box,
-  Typography,
   FormControl,
   FormHelperText,
+  TextField,
+  Typography,
 } from "@mui/material";
-import { extractOnlyNumbers } from "../../utils/utils";
-import { creditCardSchema } from "../validation/creditCardValidation";
-import { checkForErrorInFormFields } from "../../utils/utils";
+import React, { useEffect, useState } from "react";
+import {
+  checkForErrorInFormFields,
+  extractOnlyNumbers,
+} from "../../utils/utils";
 import { CardNumberInputFieldProps } from "../types";
+import { creditCardSchema } from "../validation/creditCardValidation";
 
-export const CardNumberInputField: React.FC<
-  CardNumberInputFieldProps
-> = ({
+export const CardNumberInputField: React.FC<CardNumberInputFieldProps> = ({
   cardNumArray,
   setCardNumArray,
   inputRefs,
   isErrorWhenFormSubmit,
 }) => {
-  const [errorCardNumArray, setErrorCardNumArray] = useState<
-    string | null
-  >(null);
+  const [errorCardNumArray, setErrorCardNumArray] = useState<string | null>(
+    null
+  );
 
   const handleKeyUp = (
     event: React.KeyboardEvent<HTMLInputElement>,
@@ -79,8 +79,7 @@ export const CardNumberInputField: React.FC<
   };
 
   useEffect(() => {
-    (errorCardNumArray || isErrorWhenFormSubmit) &&
-      handleErrorCheck();
+    (errorCardNumArray || isErrorWhenFormSubmit) && handleErrorCheck();
   }, [isErrorWhenFormSubmit, cardNumArray]);
 
   const handleErrorCheck = () => {
@@ -96,20 +95,20 @@ export const CardNumberInputField: React.FC<
   return (
     <Box>
       <FormControl>
-        <Typography component="h2">Card Number</Typography>
-        <Box display="flex" gap={1}>
+        <Typography component='h2' for='number-1'>
+          Card Number
+        </Typography>
+        <Box display='flex' gap={1}>
           {[0, 1, 2, 3].map((index) => (
             <TextField
+              id={`number-${index}`}
               key={index}
-              type="text"
-              name="cardNumArray"
+              type='text'
+              name='cardNumArray'
               inputProps={{ maxLength: 4 }}
               inputRef={(el) => (inputRefs.current[index] = el)}
               onKeyUp={(e) =>
-                handleKeyUp(
-                  e as React.KeyboardEvent<HTMLInputElement>,
-                  index
-                )
+                handleKeyUp(e as React.KeyboardEvent<HTMLInputElement>, index)
               }
               value={extractOnlyNumbers(cardNumArray, index).join("")}
               onChange={() => {}} // Adding empty onChange to suppress warning
