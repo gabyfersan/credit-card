@@ -1,4 +1,9 @@
-import { Box, Grid, Typography } from "@mui/material";
+import {
+  Grid,
+  Typography,
+  FormControl,
+  FormLabel,
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { checkForErrorInFormFields } from "../../utils/utils";
 import { ExpirationSelectInputFieldProps } from "../types";
@@ -8,9 +13,19 @@ import { YearSelect } from "./YearSelect"; // Adjust the import path as necessar
 
 export const ExpirationSelectInputField: React.FC<
   ExpirationSelectInputFieldProps
-> = ({ expMonth, setExpMonth, expYear, setExpYear, isErrorWhenFormSubmit }) => {
-  const [errorExpYear, setErrorExpYear] = useState<string | null>(null);
-  const [errorExpMonth, setErrorExpMonth] = useState<string | null>(null);
+> = ({
+  expMonth,
+  setExpMonth,
+  expYear,
+  setExpYear,
+  isErrorWhenFormSubmit,
+}) => {
+  const [errorExpYear, setErrorExpYear] = useState<string | null>(
+    null
+  );
+  const [errorExpMonth, setErrorExpMonth] = useState<string | null>(
+    null
+  );
   const currentYear = new Date().getFullYear();
 
   const handleErrorCheckExpYear = () => {
@@ -36,15 +51,20 @@ export const ExpirationSelectInputField: React.FC<
   };
 
   useEffect(() => {
-    (errorExpYear || isErrorWhenFormSubmit) && handleErrorCheckExpYear();
-    (errorExpMonth || isErrorWhenFormSubmit) && handleErrorCheckExpMonth();
+    (errorExpYear || isErrorWhenFormSubmit) &&
+      handleErrorCheckExpYear();
+    (errorExpMonth || isErrorWhenFormSubmit) &&
+      handleErrorCheckExpMonth();
   }, [isErrorWhenFormSubmit, expMonth, expYear]);
 
   return (
-    <Box>
-      <Typography component='h2' for='month'>
-        Expiration Date
-      </Typography>
+    <FormControl fullWidth>
+      <FormLabel htmlFor="month" sx={{ top: "10px" }}>
+        <Typography component="h2" variant="h6">
+          Expiration Date
+        </Typography>
+      </FormLabel>
+
       <Grid container spacing={2}>
         <Grid item xs={6}>
           <MonthSelect
@@ -64,6 +84,6 @@ export const ExpirationSelectInputField: React.FC<
           />
         </Grid>
       </Grid>
-    </Box>
+    </FormControl>
   );
 };

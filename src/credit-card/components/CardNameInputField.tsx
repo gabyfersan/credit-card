@@ -1,15 +1,20 @@
-import { Box, TextField, Typography } from "@mui/material";
+import {
+  TextField,
+  Typography,
+  FormControl,
+  FormLabel,
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { checkForErrorInFormFields } from "../../utils/utils";
 import { CardHolderInputFieldProps } from "../types";
 import { creditCardSchema } from "../validation/creditCardValidation";
 
-export const CardNameInputField: React.FC<CardHolderInputFieldProps> = ({
-  cardName,
-  setCardName,
-  isErrorWhenFormSubmit,
-}) => {
-  const [errorCardName, setErrorCardName] = useState<string | null>(null);
+export const CardNameInputField: React.FC<
+  CardHolderInputFieldProps
+> = ({ cardName, setCardName, isErrorWhenFormSubmit }) => {
+  const [errorCardName, setErrorCardName] = useState<string | null>(
+    null
+  );
 
   const handleErrorCheck = () => {
     checkForErrorInFormFields(
@@ -26,22 +31,25 @@ export const CardNameInputField: React.FC<CardHolderInputFieldProps> = ({
   }, [isErrorWhenFormSubmit, cardName]);
 
   return (
-    <Box>
-      <Typography component='h2' for='name'>
-        Card Holder
-      </Typography>
+    <FormControl fullWidth>
+      <FormLabel htmlFor="name">
+        <Typography component="h2" variant="h6">
+          Card Holder
+        </Typography>
+      </FormLabel>
+
       <TextField
-        id='name'
-        type='text'
+        id="name"
+        type="text"
         fullWidth
-        placeholder='John Doe'
-        name='cardName'
+        placeholder="John Doe"
+        name="cardName"
         value={cardName}
         onChange={(event) => setCardName(event.target.value)}
         error={!!errorCardName}
         helperText={errorCardName || " "}
         onBlur={handleErrorCheck}
       />
-    </Box>
+    </FormControl>
   );
 };

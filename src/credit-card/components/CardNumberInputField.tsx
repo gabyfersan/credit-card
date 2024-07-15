@@ -4,6 +4,7 @@ import {
   FormHelperText,
   TextField,
   Typography,
+  FormLabel,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import {
@@ -13,15 +14,17 @@ import {
 import { CardNumberInputFieldProps } from "../types";
 import { creditCardSchema } from "../validation/creditCardValidation";
 
-export const CardNumberInputField: React.FC<CardNumberInputFieldProps> = ({
+export const CardNumberInputField: React.FC<
+  CardNumberInputFieldProps
+> = ({
   cardNumArray,
   setCardNumArray,
   inputRefs,
   isErrorWhenFormSubmit,
 }) => {
-  const [errorCardNumArray, setErrorCardNumArray] = useState<string | null>(
-    null
-  );
+  const [errorCardNumArray, setErrorCardNumArray] = useState<
+    string | null
+  >(null);
 
   const handleKeyUp = (
     event: React.KeyboardEvent<HTMLInputElement>,
@@ -79,7 +82,8 @@ export const CardNumberInputField: React.FC<CardNumberInputFieldProps> = ({
   };
 
   useEffect(() => {
-    (errorCardNumArray || isErrorWhenFormSubmit) && handleErrorCheck();
+    (errorCardNumArray || isErrorWhenFormSubmit) &&
+      handleErrorCheck();
   }, [isErrorWhenFormSubmit, cardNumArray]);
 
   const handleErrorCheck = () => {
@@ -93,34 +97,38 @@ export const CardNumberInputField: React.FC<CardNumberInputFieldProps> = ({
     );
   };
   return (
-    <Box>
-      <FormControl>
-        <Typography component='h2' for='number-1'>
+    <FormControl fullWidth>
+      <FormLabel htmlFor="number-0">
+        <Typography component="h2" variant="h6">
           Card Number
         </Typography>
-        <Box display='flex' gap={1}>
-          {[0, 1, 2, 3].map((index) => (
-            <TextField
-              id={`number-${index}`}
-              key={index}
-              type='text'
-              name='cardNumArray'
-              inputProps={{ maxLength: 4 }}
-              inputRef={(el) => (inputRefs.current[index] = el)}
-              onKeyUp={(e) =>
-                handleKeyUp(e as React.KeyboardEvent<HTMLInputElement>, index)
-              }
-              value={extractOnlyNumbers(cardNumArray, index).join("")}
-              onChange={() => {}} // Adding empty onChange to suppress warning
-              onBlur={() => index === 3 && handleErrorCheck()}
-              error={!!errorCardNumArray}
-            />
-          ))}
-        </Box>
-        <FormHelperText error={true}>
-          {errorCardNumArray ? errorCardNumArray : " "}
-        </FormHelperText>
-      </FormControl>
-    </Box>
+      </FormLabel>
+
+      <Box display="flex" gap={1}>
+        {[0, 1, 2, 3].map((index) => (
+          <TextField
+            id={`number-${index}`}
+            key={index}
+            type="text"
+            name="cardNumArray"
+            inputProps={{ maxLength: 4 }}
+            inputRef={(el) => (inputRefs.current[index] = el)}
+            onKeyUp={(e) =>
+              handleKeyUp(
+                e as React.KeyboardEvent<HTMLInputElement>,
+                index
+              )
+            }
+            value={extractOnlyNumbers(cardNumArray, index).join("")}
+            onChange={() => {}} // Adding empty onChange to suppress warning
+            onBlur={() => index === 3 && handleErrorCheck()}
+            error={!!errorCardNumArray}
+          />
+        ))}
+      </Box>
+      <FormHelperText error={true}>
+        {errorCardNumArray ? errorCardNumArray : " "}
+      </FormHelperText>
+    </FormControl>
   );
 };
