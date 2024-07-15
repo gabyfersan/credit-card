@@ -18,6 +18,7 @@ export const MonthSelect: React.FC<MonthSelectProps> = ({
     <FormControl fullWidth margin="normal">
       <InputLabel id="card-expiration-month-label">Month</InputLabel>
       <Select
+        labelId="month-select"
         id="month"
         value={expMonth}
         label="Month"

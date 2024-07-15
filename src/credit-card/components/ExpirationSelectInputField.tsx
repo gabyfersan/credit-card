@@ -1,15 +1,15 @@
 import {
   Grid,
   Typography,
-  FormControl,
   FormLabel,
+  FormControl,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { checkForErrorInFormFields } from "../../utils/utils";
 import { ExpirationSelectInputFieldProps } from "../types";
 import { creditCardSchema } from "../validation/creditCardValidation";
-import { MonthSelect } from "./MonthSelect"; // Adjust the import path as necessary
-import { YearSelect } from "./YearSelect"; // Adjust the import path as necessary
+import { MonthSelect } from "./MonthSelect";
+import { YearSelect } from "./YearSelect";
 
 export const ExpirationSelectInputField: React.FC<
   ExpirationSelectInputFieldProps
@@ -59,7 +59,7 @@ export const ExpirationSelectInputField: React.FC<
 
   return (
     <FormControl fullWidth>
-      <FormLabel htmlFor="month" sx={{ top: "10px" }}>
+      <FormLabel id="month-select" sx={{ top: "10px" }}>
         <Typography component="h2" variant="h6">
           Expiration Date
         </Typography>

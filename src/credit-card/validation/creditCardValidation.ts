@@ -3,7 +3,6 @@ const currentYear = new Date().getFullYear();
 const currentYearLastTwoDigits = currentYear % 100;
 const maxYearLastTwoDigits = (currentYear + 3) % 100;
 
-// Define the Zod schema
 export const creditCardSchema = z.object({
   cardName: z
     .string()
