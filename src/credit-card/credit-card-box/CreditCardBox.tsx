@@ -12,27 +12,29 @@ const CreditCardBox: React.FC<CreditCardBoxProps> = ({
 }) => {
   return (
     <aside
-      className={`credit-card-box ${cardFlipToBackside ? "hover" : ""}`}
-      aria-hidden='true'
+      className={`credit-card-box ${
+        cardFlipToBackside ? "hover" : ""
+      }`}
+      aria-hidden="true"
     >
-      <div className='flip' aria-hidden='true'>
-        <div className='front'>
-          <div className='chip'></div>
-          <div className='logo'>
+      <div className="flip" aria-hidden="true">
+        <div className="front">
+          <div className="chip"></div>
+          <div className="logo">
             <svg
-              version='1.1'
-              id='visa'
-              xmlns='http://www.w3.org/2000/svg'
-              xmlnsXlink='http://www.w3.org/1999/xlink'
-              width='2.9896rem'
-              height='2.9896rem'
-              viewBox='0 0 47.834 47.834'
-              enableBackground='new 0 0 47.834 47.834'
+              version="1.1"
+              id="visa"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlnsXlink="http://www.w3.org/1999/xlink"
+              width="2.9896rem"
+              height="2.9896rem"
+              viewBox="0 0 47.834 47.834"
+              enableBackground="new 0 0 47.834 47.834"
             >
               <g>
                 <g>
                   <path
-                    d='M44.688,16.814h-3.004c-0.933,0-1.627,0.254-2.037,1.184l-5.773,13.074h4.083c0,0,0.666-1.758,0.817-2.143
+                    d="M44.688,16.814h-3.004c-0.933,0-1.627,0.254-2.037,1.184l-5.773,13.074h4.083c0,0,0.666-1.758,0.817-2.143
                        c0.447,0,4.414,0.006,4.979,0.006c0.116,0.498,0.474,2.137,0.474,2.137h3.607L44.688,16.814z M39.893,26.01
                        c0.32-0.819,1.549-3.987,1.549-3.987c-0.021,0.039,0.317-0.825,0.518-1.362l0.262,1.23c0,0,0.745,3.406,0.901,4.119H39.893z
                        M34.146,26.404c-0.028,2.963-2.684,4.875-6.771,4.875c-1.743-0.018-3.422-0.361-4.332-0.76l0.547-3.193l0.501,0.228
@@ -42,16 +44,15 @@ const CreditCardBox: React.FC<CreditCardBoxProps> = ({
                        C33.126,23.546,34.163,24.783,34.146,26.404z M0,16.962l0.05-0.286h6.028c0.813,0.031,1.468,0.29,1.694,1.159l1.311,6.304
                        C7.795,20.842,4.691,18.099,0,16.962z M17.581,16.812l-6.123,14.239l-4.114,0.007L3.862,19.161
                        c2.503,1.602,4.635,4.144,5.386,5.914l0.406,1.469l3.808-9.729L17.581,16.812L17.581,16.812z M19.153,16.8h3.89L20.61,31.066
-                       h-3.888L19.153,16.8z'
+                       h-3.888L19.153,16.8z"
                   />
                 </g>
               </g>
             </svg>
           </div>
-          <div className='number'>
+          <div className="number">
             {cardNumArray.map((number: number, i: number) => {
               let output;
-
               output = number === null ? "*" : number;
               if ((i + 1) % 4 === 0) {
                 output += " ";
@@ -59,34 +60,34 @@ const CreditCardBox: React.FC<CreditCardBoxProps> = ({
               return output;
             })}
           </div>
-          <div className='card-holder'>
+          <div className="card-holder">
             <label>Card holder</label>
             <div>{cardName}</div>
           </div>
-          <div className='card-expiration-date'>
+          <div className="card-expiration-date">
             <label>Expires</label>
             <div>
               {expMonth ? expMonth : "MM"}/{expYear ? expYear : "YY"}
             </div>
           </div>
         </div>
-        <div className='back'>
-          <div className='strip'></div>
-          <div className='logo'>
+        <div className="back">
+          <div className="strip"></div>
+          <div className="logo">
             <svg
-              version='1.1'
-              id='visa'
-              xmlns='http://www.w3.org/2000/svg'
-              xmlnsXlink='http://www.w3.org/1999/xlink'
-              width='2.9896rem'
-              height='2.9896rem'
-              viewBox='0 0 47.834 47.834'
-              enableBackground='new 0 0 47.834 47.834'
+              version="1.1"
+              id="visa"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlnsXlink="http://www.w3.org/1999/xlink"
+              width="2.9896rem"
+              height="2.9896rem"
+              viewBox="0 0 47.834 47.834"
+              enableBackground="new 0 0 47.834 47.834"
             >
               <g>
                 <g>
                   <path
-                    d='M44.688,16.814h-3.004c-0.933,0-1.627,0.254-2.037,1.184l-5.773,13.074h4.083c0,0,0.666-1.758,0.817-2.143
+                    d="M44.688,16.814h-3.004c-0.933,0-1.627,0.254-2.037,1.184l-5.773,13.074h4.083c0,0,0.666-1.758,0.817-2.143
                        c0.447,0,4.414,0.006,4.979,0.006c0.116,0.498,0.474,2.137,0.474,2.137h3.607L44.688,16.814z M39.893,26.01
                        c0.32-0.819,1.549-3.987,1.549-3.987c-0.021,0.039,0.317-0.825,0.518-1.362l0.262,1.23c0,0,0.745,3.406,0.901,4.119H39.893z
                        M34.146,26.404c-0.028,2.963-2.684,4.875-6.771,4.875c-1.743-0.018-3.422-0.361-4.332-0.76l0.547-3.193l0.501,0.228
@@ -96,13 +97,13 @@ const CreditCardBox: React.FC<CreditCardBoxProps> = ({
                        C33.126,23.546,34.163,24.783,34.146,26.404z M0,16.962l0.05-0.286h6.028c0.813,0.031,1.468,0.29,1.694,1.159l1.311,6.304
                        C7.795,20.842,4.691,18.099,0,16.962z M17.581,16.812l-6.123,14.239l-4.114,0.007L3.862,19.161
                        c2.503,1.602,4.635,4.144,5.386,5.914l0.406,1.469l3.808-9.729L17.581,16.812L17.581,16.812z M19.153,16.8h3.89L20.61,31.066
-                       h-3.888L19.153,16.8z'
+                       h-3.888L19.153,16.8z"
                   />
                 </g>
               </g>
             </svg>
           </div>
-          <div className='ccv'>
+          <div className="ccv">
             <label>CCV</label>
             <div>{cardCcv}</div>
           </div>
