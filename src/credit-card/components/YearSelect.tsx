@@ -16,9 +16,10 @@ export const YearSelect: React.FC<YearSelectProps> = ({
   currentYear,
 }) => {
   return (
-    <FormControl fullWidth margin="normal">
+    <FormControl sx={{ width: "50%" }}>
       <InputLabel id="card-expiration-year-label">Year</InputLabel>
       <Select
+        labelId="card-expiration-year-label"
         value={expYear}
         label="Year"
         onChange={(event) => setExpYear(event.target.value)}

@@ -1,8 +1,8 @@
 import {
-  Grid,
   Typography,
   FormLabel,
   FormControl,
+  FormGroup,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { checkForErrorInFormFields } from "../../utils/utils";
@@ -59,31 +59,31 @@ export const ExpirationSelectInputField: React.FC<
 
   return (
     <FormControl fullWidth>
-      <FormLabel id="month-select" sx={{ top: "10px" }}>
+      <FormLabel
+        id="card-expiration-month-label"
+        sx={{ top: "-5px" }}
+      >
         <Typography component="h2" variant="h6">
           Expiration Date
         </Typography>
       </FormLabel>
 
-      <Grid container spacing={2}>
-        <Grid item xs={6}>
-          <MonthSelect
-            expMonth={expMonth}
-            setExpMonth={setExpMonth}
-            errorExpMonth={errorExpMonth}
-            handleErrorCheckExpMonth={handleErrorCheckExpMonth}
-          />
-        </Grid>
-        <Grid item xs={6}>
-          <YearSelect
-            expYear={expYear}
-            setExpYear={setExpYear}
-            errorExpYear={errorExpYear}
-            handleErrorCheckExpYear={handleErrorCheckExpYear}
-            currentYear={currentYear}
-          />
-        </Grid>
-      </Grid>
+      <FormGroup row>
+        <MonthSelect
+          expMonth={expMonth}
+          setExpMonth={setExpMonth}
+          errorExpMonth={errorExpMonth}
+          handleErrorCheckExpMonth={handleErrorCheckExpMonth}
+        />
+
+        <YearSelect
+          expYear={expYear}
+          setExpYear={setExpYear}
+          errorExpYear={errorExpYear}
+          handleErrorCheckExpYear={handleErrorCheckExpYear}
+          currentYear={currentYear}
+        />
+      </FormGroup>
     </FormControl>
   );
 };

@@ -15,10 +15,10 @@ export const MonthSelect: React.FC<MonthSelectProps> = ({
   handleErrorCheckExpMonth,
 }) => {
   return (
-    <FormControl fullWidth margin="normal">
+    <FormControl sx={{ width: "50%", paddingRight: "1rem" }}>
       <InputLabel id="card-expiration-month-label">Month</InputLabel>
       <Select
-        labelId="month-select"
+        labelId="card-expiration-month-label"
         id="month"
         value={expMonth}
         label="Month"
