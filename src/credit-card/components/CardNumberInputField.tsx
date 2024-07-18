@@ -108,6 +108,9 @@ export const CardNumberInputField: React.FC<
         {[0, 1, 2, 3].map((index) => (
           <TextField
             id={`number-${index}`}
+            aria-label={`Card number ${index * 4 + 1} to ${
+              index * 4 + 4
+            }`}
             key={index}
             type="text"
             name="cardNumArray"
