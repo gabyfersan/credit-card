@@ -1,5 +1,6 @@
 import { z } from "zod";
 import React from "react";
+import { CardInformation } from "../credit-card/types";
 // Example  extractOnlyNumbers ([1, 1, 1, null, null, null], 0) => [1, 1, 1]
 export const extractOnlyNumbers = (
   cardNumArray: Array<number>,
@@ -27,14 +28,8 @@ export const checkForErrorInFormFields = (
 };
 
 export const checkAllFieldInForm = (
-  creditCardSchema: z.ZodSchema<any>,
-  formValues: {
-    cardNum: string;
-    expMonth: string;
-    expYear: string;
-    cardCcv: string;
-    cardName: string;
-  }
+  creditCardSchema: z.ZodSchema<CardInformation>,
+  formValues: CardInformation
 ) => {
   const result = creditCardSchema.safeParse(formValues);
   return result.success;
