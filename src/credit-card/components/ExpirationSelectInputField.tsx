@@ -3,11 +3,15 @@ import {
   FormLabel,
   FormControl,
   FormGroup,
+  FormHelperText,
 } from "@mui/material";
 import React, { useEffect, useState, useRef } from "react";
 import { checkForErrorInFormFields } from "../../utils/utils";
 import { ExpirationSelectInputFieldProps } from "../types";
-import { creditCardSchema } from "../validation/creditCardValidation";
+import {
+  creditCardSchema,
+  expSchema,
+} from "../validation/creditCardValidation";
 import { MonthSelect } from "./MonthSelect";
 import { YearSelect } from "./YearSelect";
 
@@ -28,6 +32,19 @@ export const ExpirationSelectInputField: React.FC<
     null
   );
   const currentYear = new Date().getFullYear();
+  const [errorExp, setErrorExp] = useState<string | null>(null);
+
+  const errorCheckExperationDate = () => {
+    const result = expSchema.safeParse({
+      expMonth,
+      expYear,
+    });
+    if (result.success) {
+      setErrorExp(null);
+    } else {
+      setErrorExp(result.error.errors[0].message);
+    }
+  };
 
   const handleErrorCheckExpYear = () => {
     checkForErrorInFormFields(
@@ -38,6 +55,7 @@ export const ExpirationSelectInputField: React.FC<
       setErrorExpYear,
       creditCardSchema.pick({ expYear: true })
     );
+    errorCheckExperationDate();
   };
 
   const handleErrorCheckExpMonth = () => {
@@ -49,6 +67,7 @@ export const ExpirationSelectInputField: React.FC<
       setErrorExpMonth,
       creditCardSchema.pick({ expMonth: true })
     );
+    errorCheckExperationDate();
   };
 
   useEffect(() => {
@@ -83,6 +102,9 @@ export const ExpirationSelectInputField: React.FC<
           currentYear={currentYear}
         />
       </FormGroup>
+      <FormHelperText error={true}>
+        {errorExp ? errorExp : " "}
+      </FormHelperText>
     </FormControl>
   );
 };
