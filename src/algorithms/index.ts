@@ -59,7 +59,7 @@ function generateArray(length: number) {
 }
 
 // Example usage:
-const randomString = generateRandomString(10); // Generates a random string of length 10
+const randomString = generateRandomString(10);
 console.log(randomString);
 
 function removeIdenticalLetters2(s: string) {
