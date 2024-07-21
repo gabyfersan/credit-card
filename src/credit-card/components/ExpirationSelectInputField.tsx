@@ -10,7 +10,7 @@ import { checkForErrorInFormFields } from "../../utils/utils";
 import { ExpirationSelectInputFieldProps } from "../types";
 import {
   creditCardSchema,
-  expSchema,
+  expirationSchema,
 } from "../validation/creditCardValidation";
 import { MonthSelect } from "./MonthSelect";
 import { YearSelect } from "./YearSelect";
@@ -18,64 +18,66 @@ import { YearSelect } from "./YearSelect";
 export const ExpirationSelectInputField: React.FC<
   ExpirationSelectInputFieldProps
 > = ({
-  expMonth,
-  setExpMonth,
-  expYear,
-  setExpYear,
+  expirationMonth,
+  setExpirationMonth,
+  expirationYear,
+  setExpirationYear,
   isErrorWhenFormSubmit,
 }) => {
   const ref = useRef(null);
-  const [errorExpYear, setErrorExpYear] = useState<string | null>(
-    null
-  );
-  const [errorExpMonth, setErrorExpMonth] = useState<string | null>(
-    null
-  );
+  const [errorExpirationYear, setErrorExpirationYear] = useState<
+    string | null
+  >(null);
+  const [errorExpirationMonth, setErrorExpirationMonth] = useState<
+    string | null
+  >(null);
   const currentYear = new Date().getFullYear();
-  const [errorExp, setErrorExp] = useState<string | null>(null);
+  const [errorExpiration, setErrorExpiration] = useState<
+    string | null
+  >(null);
 
-  const errorCheckExperationDate = () => {
-    const result = expSchema.safeParse({
-      expMonth,
-      expYear,
+  const errorCheckExpirationDate = () => {
+    const result = expirationSchema.safeParse({
+      expirationMonth,
+      expirationYear,
     });
     if (result.success) {
-      setErrorExp(null);
+      setErrorExpiration(null);
     } else {
-      setErrorExp(result.error.errors[0].message);
+      setErrorExpiration(result.error.errors[0].message);
     }
   };
 
-  const handleErrorCheckExpYear = () => {
+  const handleErrorCheckExpirationYear = () => {
     checkForErrorInFormFields(
       {
-        name: "expYear",
-        value: expYear,
+        name: "expirationYear",
+        value: expirationYear,
       },
-      setErrorExpYear,
-      creditCardSchema.pick({ expYear: true })
+      setErrorExpirationYear,
+      creditCardSchema.pick({ expirationYear: true })
     );
-    errorCheckExperationDate();
+    errorCheckExpirationDate();
   };
 
-  const handleErrorCheckExpMonth = () => {
+  const handleErrorCheckExpirationMonth = () => {
     checkForErrorInFormFields(
       {
-        name: "expMonth",
-        value: expMonth,
+        name: "expirationMonth",
+        value: expirationMonth,
       },
-      setErrorExpMonth,
-      creditCardSchema.pick({ expMonth: true })
+      setErrorExpirationMonth,
+      creditCardSchema.pick({ expirationMonth: true })
     );
-    errorCheckExperationDate();
+    errorCheckExpirationDate();
   };
 
   useEffect(() => {
-    (errorExpYear || isErrorWhenFormSubmit) &&
-      handleErrorCheckExpYear();
-    (errorExpMonth || isErrorWhenFormSubmit) &&
-      handleErrorCheckExpMonth();
-  }, [isErrorWhenFormSubmit, expMonth, expYear]);
+    (errorExpirationYear || isErrorWhenFormSubmit) &&
+      handleErrorCheckExpirationYear();
+    (errorExpirationMonth || isErrorWhenFormSubmit) &&
+      handleErrorCheckExpirationMonth();
+  }, [isErrorWhenFormSubmit, expirationMonth, expirationYear]);
 
   return (
     <FormControl fullWidth>
@@ -87,23 +89,27 @@ export const ExpirationSelectInputField: React.FC<
 
       <FormGroup row>
         <MonthSelect
-          expMonth={expMonth}
-          setExpMonth={setExpMonth}
-          errorExpMonth={errorExpMonth}
-          handleErrorCheckExpMonth={handleErrorCheckExpMonth}
+          expirationMonth={expirationMonth}
+          setExpirationMonth={setExpirationMonth}
+          errorExpirationMonth={errorExpirationMonth}
+          handleErrorCheckExpirationMonth={
+            handleErrorCheckExpirationMonth
+          }
           ref={ref}
         />
 
         <YearSelect
-          expYear={expYear}
-          setExpYear={setExpYear}
-          errorExpYear={errorExpYear}
-          handleErrorCheckExpYear={handleErrorCheckExpYear}
+          expirationYear={expirationYear}
+          setExpirationYear={setExpirationYear}
+          errorExpirationYear={errorExpirationYear}
+          handleErrorCheckExpirationYear={
+            handleErrorCheckExpirationYear
+          }
           currentYear={currentYear}
         />
       </FormGroup>
       <FormHelperText error={true}>
-        {errorExp ? errorExp : " "}
+        {errorExpiration ? errorExpiration : " "}
       </FormHelperText>
     </FormControl>
   );

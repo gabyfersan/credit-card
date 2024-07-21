@@ -13,8 +13,8 @@ const App = () => {
     useState<CardInformation>({
       cardNum: "",
       cardName: "",
-      expMonth: "",
-      expYear: "",
+      expirationMonth: "",
+      expirationYear: "",
       cardCcv: "",
     });
 

@@ -15,10 +15,10 @@ interface refProp {
 export const MonthSelect = forwardRef<refProp, MonthSelectProps>(
   (
     {
-      expMonth,
-      setExpMonth,
-      errorExpMonth,
-      handleErrorCheckExpMonth,
+      expirationMonth,
+      setExpirationMonth,
+      errorExpirationMonth,
+      handleErrorCheckExpirationMonth,
     },
     ref
   ) => {
@@ -44,14 +44,14 @@ export const MonthSelect = forwardRef<refProp, MonthSelectProps>(
           ref={inputRef}
           labelId="card-expiration-month-label"
           id="month"
-          value={expMonth}
+          value={expirationMonth}
           label="Month"
           onChange={(event) => {
-            setExpMonth(event.target.value);
+            setExpirationMonth(event.target.value);
           }}
-          name="expMonth"
-          onBlur={handleErrorCheckExpMonth}
-          error={!!errorExpMonth}
+          name="expirationMonth"
+          onBlur={handleErrorCheckExpirationMonth}
+          error={!!errorExpirationMonth}
           type="text"
         >
           <MenuItem value="">
@@ -64,7 +64,7 @@ export const MonthSelect = forwardRef<refProp, MonthSelectProps>(
           ))}
         </Select>
         <FormHelperText error={true}>
-          {errorExpMonth ? errorExpMonth : " "}
+          {errorExpirationMonth ? errorExpirationMonth : " "}
         </FormHelperText>
       </FormControl>
     );

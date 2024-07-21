@@ -9,10 +9,10 @@ import {
 import { YearSelectProps } from "../types";
 
 export const YearSelect: React.FC<YearSelectProps> = ({
-  expYear,
-  setExpYear,
-  errorExpYear,
-  handleErrorCheckExpYear,
+  expirationYear,
+  setExpirationYear,
+  errorExpirationYear,
+  handleErrorCheckExpirationYear,
   currentYear,
 }) => {
   return (
@@ -20,12 +20,12 @@ export const YearSelect: React.FC<YearSelectProps> = ({
       <InputLabel id="card-expiration-year-label">Year</InputLabel>
       <Select
         labelId="card-expiration-year-label"
-        value={expYear}
+        value={expirationYear}
         label="Year"
-        onChange={(event) => setExpYear(event.target.value)}
-        name="expYear"
-        onBlur={handleErrorCheckExpYear}
-        error={!!errorExpYear}
+        onChange={(event) => setExpirationYear(event.target.value)}
+        name="expirationYear"
+        onBlur={handleErrorCheckExpirationYear}
+        error={!!errorExpirationYear}
         type="text"
       >
         <MenuItem value="">
@@ -38,7 +38,7 @@ export const YearSelect: React.FC<YearSelectProps> = ({
         ))}
       </Select>
       <FormHelperText error={true}>
-        {errorExpYear ? errorExpYear : " "}
+        {errorExpirationYear ? errorExpirationYear : " "}
       </FormHelperText>
     </FormControl>
   );

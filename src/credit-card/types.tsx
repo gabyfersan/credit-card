@@ -1,8 +1,8 @@
 export interface CardInformation {
   cardNum: string;
   cardName: string;
-  expMonth: string;
-  expYear: string;
+  expirationMonth: string;
+  expirationYear: string;
   cardCcv: string;
 }
 
@@ -17,8 +17,8 @@ export interface CreditCardProps {
 export interface CreditCardBoxProps {
   cardNumArray: Array<number>;
   cardName: string;
-  expMonth: string;
-  expYear: string;
+  expirationMonth: string;
+  expirationYear: string;
   cardCcv: string;
   cardFlipToBackside: boolean;
 }
@@ -45,24 +45,24 @@ export interface CCVInputFieldProps {
 }
 
 export interface ExpirationSelectInputFieldProps {
-  expMonth: string;
-  setExpMonth: React.Dispatch<React.SetStateAction<string>>;
-  expYear: string;
-  setExpYear: React.Dispatch<React.SetStateAction<string>>;
+  expirationMonth: string;
+  setExpirationMonth: React.Dispatch<React.SetStateAction<string>>;
+  expirationYear: string;
+  setExpirationYear: React.Dispatch<React.SetStateAction<string>>;
   isErrorWhenFormSubmit: boolean;
 }
 
 export interface YearSelectProps {
-  expYear: string;
-  setExpYear: React.Dispatch<React.SetStateAction<string>>;
-  errorExpYear: string | null;
-  handleErrorCheckExpYear: () => void;
+  expirationYear: string;
+  setExpirationYear: React.Dispatch<React.SetStateAction<string>>;
+  errorExpirationYear: string | null;
+  handleErrorCheckExpirationYear: () => void;
   currentYear: number;
 }
 
 export interface MonthSelectProps {
-  expMonth: string;
-  setExpMonth: React.Dispatch<React.SetStateAction<string>>;
-  errorExpMonth: string | null;
-  handleErrorCheckExpMonth: () => void;
+  expirationMonth: string;
+  setExpirationMonth: React.Dispatch<React.SetStateAction<string>>;
+  errorExpirationMonth: string | null;
+  handleErrorCheckExpirationMonth: () => void;
 }

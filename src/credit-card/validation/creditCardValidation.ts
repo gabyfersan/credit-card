@@ -17,7 +17,7 @@ export const creditCardSchema = z.object({
       "Credit number must be a valid Visa card number"
     ),
 
-  expYear: z
+  expirationYear: z
     .string()
     .regex(/^\d{2}$/, { message: "Year must be 4 digit" })
     .refine(
@@ -36,26 +36,35 @@ export const creditCardSchema = z.object({
         ).padStart(2, "0")}`,
       }
     ),
-  expMonth: z.string().regex(/^(0[1-9]|1[0-2])$/, {
+  expirationMonth: z.string().regex(/^(0[1-9]|1[0-2])$/, {
     message: "Month must be 01-12",
   }),
 });
 
-const isFutureDate = (expMonth: string, expYear: string): boolean => {
-  if (!expMonth || !expYear) {
+const isFutureDate = (
+  expirationMonth: string,
+  expirationYear: string
+): boolean => {
+  if (!expirationMonth || !expirationYear) {
     return true;
   }
   const now = new Date();
-  const expDate = new Date(Number(`20${expYear}`), Number(expMonth));
-  return expDate > now;
+  const expirationDate = new Date(
+    Number(`20${expirationYear}`),
+    Number(expirationMonth)
+  );
+  return expirationDate > now;
 };
 
-export const expSchema = z
+export const expirationSchema = z
   .object({
-    expMonth: z.string(),
-    expYear: z.string(),
+    expirationMonth: z.string(),
+    expirationYear: z.string(),
   })
-  .refine((data) => isFutureDate(data.expMonth, data.expYear), {
-    message: "Expiration date cannot be in the past",
-    path: ["expMonth", "expYear"],
-  });
+  .refine(
+    (data) => isFutureDate(data.expirationMonth, data.expirationYear),
+    {
+      message: "Expiration date cannot be in the past",
+      path: ["expirationMonth", "expirationYear"],
+    }
+  );

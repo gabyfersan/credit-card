@@ -5,8 +5,8 @@ import "./style.css";
 const CreditCardBox: React.FC<CreditCardBoxProps> = ({
   cardNumArray,
   cardName,
-  expMonth,
-  expYear,
+  expirationMonth,
+  expirationYear,
   cardCcv,
   cardFlipToBackside,
 }) => {
@@ -67,7 +67,8 @@ const CreditCardBox: React.FC<CreditCardBoxProps> = ({
           <div className="card-expiration-date">
             <label>Expires</label>
             <div>
-              {expMonth ? expMonth : "MM"}/{expYear ? expYear : "YY"}
+              {expirationMonth ? expirationMonth : "MM"}/
+              {expirationYear ? expirationYear : "YY"}
             </div>
           </div>
         </div>

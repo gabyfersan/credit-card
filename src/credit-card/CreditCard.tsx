@@ -24,8 +24,8 @@ const CreditCard: React.FC<CreditCardProps> = ({
       ? cardNumber.split("").map(Number)
       : new Array(16).fill(null)
   );
-  const [expMonth, setExpMonth] = useState<string>("");
-  const [expYear, setExpYear] = useState<string>("");
+  const [expirationMonth, setExpirationMonth] = useState<string>("");
+  const [expirationYear, setExpirationYear] = useState<string>("");
   const [cardCcv, setCardCcv] = useState<string>("");
   const [cardName, setCardName] = useState<string>(cardHolder);
   const [cardFlipToBackside, setCardFlipToBackside] =
@@ -47,8 +47,8 @@ const CreditCard: React.FC<CreditCardProps> = ({
     const formValues: CardInformation = {
       cardNum: extractOnlyNumbers(cardNumArray, 0, 16).join(""),
       cardName,
-      expMonth,
-      expYear,
+      expirationMonth,
+      expirationYear,
       cardCcv,
     };
     const result = checkAllFieldInForm(creditCardSchema, formValues);
@@ -60,8 +60,8 @@ const CreditCard: React.FC<CreditCardProps> = ({
       <CreditCardBox
         cardNumArray={cardNumArray}
         cardName={cardName}
-        expMonth={expMonth}
-        expYear={expYear}
+        expirationMonth={expirationMonth}
+        expirationYear={expirationYear}
         cardCcv={cardCcv}
         cardFlipToBackside={cardFlipToBackside}
       />
@@ -80,10 +80,10 @@ const CreditCard: React.FC<CreditCardProps> = ({
           isErrorWhenFormSubmit={isErrorWhenFormSubmit}
         />
         <ExpirationSelectInputField
-          expMonth={expMonth}
-          setExpMonth={setExpMonth}
-          expYear={expYear}
-          setExpYear={setExpYear}
+          expirationMonth={expirationMonth}
+          setExpirationMonth={setExpirationMonth}
+          expirationYear={expirationYear}
+          setExpirationYear={setExpirationYear}
           isErrorWhenFormSubmit={isErrorWhenFormSubmit}
         />
         <CCVInputField
