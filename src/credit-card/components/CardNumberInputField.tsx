@@ -98,37 +98,37 @@ export const CardNumberInputField: React.FC<
   };
   return (
     <FormControl fullWidth>
-      <FormLabel htmlFor="number-0">
+      <FormLabel>
         <Typography component="h2" variant="h6">
           Card Number
+          <Box display="flex" gap={1}>
+            {[0, 1, 2, 3].map((index) => (
+              <TextField
+                aria-label={`Card number ${index * 4 + 1} to ${
+                  index * 4 + 4
+                }`}
+                key={index}
+                type="text"
+                name="cardNumArray"
+                inputProps={{ maxLength: 4 }}
+                inputRef={(el) => (inputRefs.current[index] = el)}
+                onKeyUp={(e) =>
+                  handleKeyUp(
+                    e as React.KeyboardEvent<HTMLInputElement>,
+                    index
+                  )
+                }
+                value={extractOnlyNumbers(cardNumArray, index).join(
+                  ""
+                )}
+                onChange={() => {}} // Adding empty onChange to suppress warning
+                onBlur={() => index === 3 && handleErrorCheck()}
+                error={!!errorCardNumArray}
+              />
+            ))}
+          </Box>
         </Typography>
       </FormLabel>
-
-      <Box display="flex" gap={1}>
-        {[0, 1, 2, 3].map((index) => (
-          <TextField
-            id={`number-${index}`}
-            aria-label={`Card number ${index * 4 + 1} to ${
-              index * 4 + 4
-            }`}
-            key={index}
-            type="text"
-            name="cardNumArray"
-            inputProps={{ maxLength: 4 }}
-            inputRef={(el) => (inputRefs.current[index] = el)}
-            onKeyUp={(e) =>
-              handleKeyUp(
-                e as React.KeyboardEvent<HTMLInputElement>,
-                index
-              )
-            }
-            value={extractOnlyNumbers(cardNumArray, index).join("")}
-            onChange={() => {}} // Adding empty onChange to suppress warning
-            onBlur={() => index === 3 && handleErrorCheck()}
-            error={!!errorCardNumArray}
-          />
-        ))}
-      </Box>
       <FormHelperText error={true}>
         {errorCardNumArray ? errorCardNumArray : " "}
       </FormHelperText>
