@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState, useRef } from "react";
 import { checkForErrorInFormFields } from "../../utils/utils";
-import { ExpirationSelectInputFieldProps } from "../types";
+import { ExpirationSelectInputFieldProps, refProp } from "../types";
 import {
   creditCardSchema,
   expirationSchema,
@@ -24,7 +24,7 @@ export const ExpirationSelectInputField: React.FC<
   setExpirationYear,
   isErrorWhenFormSubmit,
 }) => {
-  const ref = useRef(null);
+  const ref = useRef<refProp>(null);
   const [errorExpirationYear, setErrorExpirationYear] = useState<
     string | null
   >(null);
@@ -81,7 +81,10 @@ export const ExpirationSelectInputField: React.FC<
 
   return (
     <FormControl fullWidth>
-      <FormLabel sx={{ top: "-5px" }}>
+      <FormLabel
+        sx={{ top: "-5px" }}
+        onClick={() => ref.current?.focus()}
+      >
         <Typography component="h2" variant="h6">
           Expiration Date
         </Typography>

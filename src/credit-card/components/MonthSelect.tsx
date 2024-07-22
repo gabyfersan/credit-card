@@ -6,11 +6,7 @@ import {
   Select,
 } from "@mui/material";
 import { forwardRef, useImperativeHandle, useRef } from "react";
-import { MonthSelectProps } from "../types";
-
-interface refProp {
-  focus: () => void;
-}
+import { MonthSelectProps, refProp } from "../types";
 
 export const MonthSelect = forwardRef<refProp, MonthSelectProps>(
   (
@@ -24,24 +20,18 @@ export const MonthSelect = forwardRef<refProp, MonthSelectProps>(
   ) => {
     const inputRef = useRef<HTMLSelectElement>(null);
 
-    useImperativeHandle(
-      ref,
-      function () {
-        return {
-          focus() {
-            inputRef.current?.focus();
-          },
-        };
+    useImperativeHandle(ref, () => ({
+      focus() {
+        inputRef.current?.focus();
       },
-      []
-    );
+    }));
     return (
       <FormControl sx={{ width: "50%", paddingRight: "1rem" }}>
         <InputLabel id="card-expiration-month-label">
           Month
         </InputLabel>
         <Select
-          ref={inputRef}
+          inputRef={inputRef}
           labelId="card-expiration-month-label"
           id="month"
           value={expirationMonth}

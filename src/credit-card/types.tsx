@@ -66,3 +66,7 @@ export interface MonthSelectProps {
   errorExpirationMonth: string | null;
   handleErrorCheckExpirationMonth: () => void;
 }
+
+export interface refProp {
+  focus: () => void;
+}
