@@ -111,7 +111,10 @@ export const ExpirationSelectInputField: React.FC<
           currentYear={currentYear}
         />
       </FormGroup>
-      <FormHelperText error={true}>
+      <FormHelperText
+        error={true}
+        style={{ position: "relative", top: "-1.4rem", height: "0" }}
+      >
         {errorExpiration ? errorExpiration : " "}
       </FormHelperText>
     </FormControl>
