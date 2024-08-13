@@ -21,7 +21,6 @@ export const creditCardSchema = z.object({
     .length(16, "Credit card number must be exactly 16 digits")
     .refine(
       (cardNum) => {
-        console.log(getCardType(cardNum));
         return cardRegexp[getCardType(cardNum)].test(cardNum);
       },
       {
