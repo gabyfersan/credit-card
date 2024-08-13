@@ -4,13 +4,13 @@ import { CardInformation } from "../credit-card/types";
 
 // Example  extractOnlyNumbers from an array ([1, 1, 1, null, null, null], 0) => [1, 1, 1]
 export const extractOnlyNumbers = (
-  cardNumArray: Array<number>,
+  cardNumArray: Array<number | null>,
   index: number,
   length: number = 4
 ) => {
   return cardNumArray
     .slice(index * length, length * (index + 1))
-    .filter((item: number) => typeof item === "number");
+    .filter((item: number | null) => typeof item === "number");
 };
 
 export const checkForErrorInFormFields = (
