@@ -1,7 +1,8 @@
 import { z } from "zod";
 import React from "react";
 import { CardInformation } from "../credit-card/types";
-// Example  extractOnlyNumbers ([1, 1, 1, null, null, null], 0) => [1, 1, 1]
+
+// Example  extractOnlyNumbers from an array ([1, 1, 1, null, null, null], 0) => [1, 1, 1]
 export const extractOnlyNumbers = (
   cardNumArray: Array<number>,
   index: number,
@@ -33,4 +34,43 @@ export const checkAllFieldInForm = (
 ) => {
   const result = creditCardSchema.safeParse(formValues);
   return result.success;
+};
+
+export type CardType = "Visa" | "MasterCard" | "Unknown";
+
+export const luhnCheck = (cardNumber: string) => {
+  let sum = 0;
+  let shouldDouble = false;
+
+  for (let i = cardNumber.length - 1; i >= 0; i--) {
+    let digit = parseInt(cardNumber[i]);
+
+    if (shouldDouble) {
+      digit *= 2;
+      if (digit > 9) {
+        digit -= 9;
+      }
+    }
+
+    sum += digit;
+    shouldDouble = !shouldDouble;
+  }
+
+  return sum % 10 === 0;
+};
+
+export const getCardType = (cardNumber: string): CardType => {
+  if (cardRegexp.Visa.test(cardNumber)) {
+    return "Visa";
+  } else if (cardRegexp.MasterCard.test(cardNumber)) {
+    return "MasterCard";
+  } else {
+    return "Unknown";
+  }
+};
+
+export const cardRegexp: Record<CardType, RegExp> = {
+  Visa: /^4\d{12}(\d{3})?$/,
+  MasterCard: /^5[1-5]\d{14}$/,
+  Unknown: /.^/,
 };
