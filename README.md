@@ -1,5 +1,10 @@
 ## Credit Card Component
 
+This component is only usable on Visa and Mastercard
+| Mastercard test card number| 5555500830030331 |
+| --- | --- |
+| Visa test card number | 4111111111111111 |
+
 To install dependencies:
 
 ```bash
